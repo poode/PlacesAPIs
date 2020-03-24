@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "required": [
+    "region"
+  ],
+  "properties": {
+    "region": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "errorMessage": "please send me region"
+    }
+  }
+}

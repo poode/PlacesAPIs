@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "required": [
+      "city",
+      "days"
+    ],
+    "properties": {
+      "city": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 10,
+        "errorMessage": "please send me city"
+      },
+      "days": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2,
+        "errorMessage": "please send me days"
+      }
+    }
+  }

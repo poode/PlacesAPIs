@@ -1,0 +1,39 @@
+{
+    "type": "object",
+    "required": [
+      "numberOfCases",
+      "cityId",
+      "title",
+      "src"
+    ],
+    "properties": {
+      "numberOfCases": {
+        "type": "number",
+        "minimum": 1,
+        "errorMessage": "please send me numberOfCases"
+      },
+      "cityId": {
+        "type": "number",
+        "minimum": 1,
+        "errorMessage": "please send me cityId"
+      }
+      ,
+      "title": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 255,
+        "errorMessage": "please send me title"
+      },
+      "description": {
+        "type": "string",
+        "minLength": 10,
+        "errorMessage": "please send me description"
+      },
+      "src": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 500,
+        "errorMessage": "please send me src"
+      }
+    }
+  }
