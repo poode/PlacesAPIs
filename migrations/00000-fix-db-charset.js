@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
     up: (queryInterface, Sequelize) => {
       return queryInterface.sequelize.query(
@@ -5,5 +7,5 @@ module.exports = {
           CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;`
         )
     },
-    down: (queryInterface, Sequelize) => { }
+    down: (queryInterface, Sequelize) => Promise.resolve()
   }

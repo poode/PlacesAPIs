@@ -1,14 +1,14 @@
-{
+exports.addCitySchema = {
   "type": "object",
   "required": [
-    "region"
+    "name"
   ],
   "properties": {
-    "region": {
+    "name": {
       "type": "string",
       "minLength": 3,
       "maxLength": 255,
-      "errorMessage": "please send me region"
+      "errorMessage": "please send me name of the city!"
     }
   }
 }

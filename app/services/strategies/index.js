@@ -8,4 +8,9 @@ passport.use(facebookStrategy);
 passport.use(googleStrategy);
 passport.use(jwtStrategy);
 
-exports.passport = passport;
+module.exports = {
+  passport,
+  facebook: passport.authenticate('facebook'),
+  google: passport.authenticate('google'),
+  jwt: passport.authenticate('jwt'),
+};

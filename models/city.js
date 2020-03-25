@@ -6,7 +6,14 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       allowNull: false,
     }
-  }, {});
+  }, {
+    indexes:[
+      {
+        unique: true,
+        fields:['name']
+      }
+     ]
+  });
   City.associate = function(models) {
     // associations can be defined here
     // City.hasMany(models.Place);

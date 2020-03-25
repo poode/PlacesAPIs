@@ -1,5 +1,6 @@
 const { Strategy } = require('passport-jwt');
 
+const { ServerError } = require('../../../config/serverConfig')
 const { getUserById } = require('../user');
 
 const JWTStrategy = Strategy;
@@ -14,7 +15,7 @@ const verifyCallback = async (req, jwtPayload, done) => {
   const { err, user } = await getUserById(jwtPayload.user.id);
 
   if (err) {
-    return done(err);
+    return done(new ServerError(err, 404));
   }
 
   req.user = user

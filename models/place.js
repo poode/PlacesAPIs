@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: { 
       type: DataTypes.STRING(255),
       allowNull: false,
+      unique: true,
      },
     cityId: { 
       type: DataTypes.INTEGER,
@@ -25,7 +26,14 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       }
      },
-  }, {});
+  }, {
+    indexes:[
+      {
+        unique: true,
+        fields:['name']
+      }
+     ]
+  });
   Place.associate = function(models) {
     // associations can be defined here
     Place.belongsTo(models.user);

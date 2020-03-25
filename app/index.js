@@ -6,7 +6,9 @@ const passport = require('passport');
 const { ServerError } = require('../config/serverConfig');
 const { requestLogger } = require('./middelwares/requestLogger');
 
-const { authRouter } = require('./router/authorizationRouter');
+const { userRouter } = require('./router/user');
+const { cityRouter } = require('./router/city');
+const { placeRouter } = require('./router/place');
 
 const app = express();
 app.use(passport.initialize());
@@ -20,8 +22,9 @@ app.get('/healthcheck', (req, res, next) => {
   res.json({ message: 'server is Up and Running!' });
 });
 
-// app.use('/news', newslRouter);
-app.use('/oauth', authRouter);
+app.use('/user', userRouter);
+app.use('/city', cityRouter);
+app.use('/place', placeRouter);
 
 
 // 404 handler

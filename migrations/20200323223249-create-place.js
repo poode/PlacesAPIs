@@ -12,6 +12,7 @@ module.exports = {
         type: Sequelize.STRING(255),
         primaryKey: true,
         allowNull: false,
+        unique: true
       },
       cityId: {
         type: Sequelize.INTEGER,
@@ -41,7 +42,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }).then(() => queryInterface.addIndex('places', ['name']));
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('places');

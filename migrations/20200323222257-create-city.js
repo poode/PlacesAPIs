@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }).then(() => queryInterface.addIndex('cities', ['name']));
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('cities');
