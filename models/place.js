@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Place.belongsTo(models.user);
     Place.belongsTo(models.city);
+    Place.hasMany(models.poll);
   };
   return Place;
 };

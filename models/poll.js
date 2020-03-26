@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     // console.log(models);
     // associations can be defined here
     Poll.belongsTo(models.place);
+    Poll.hasMany(models.vote);
   };
   return Poll;
 };

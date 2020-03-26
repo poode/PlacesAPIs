@@ -9,6 +9,8 @@ const { requestLogger } = require('./middelwares/requestLogger');
 const { userRouter } = require('./router/user');
 const { cityRouter } = require('./router/city');
 const { placeRouter } = require('./router/place');
+const { pollRouter } = require('./router/poll');
+const { voteRouter } = require('./router/vote');
 
 const app = express();
 app.use(passport.initialize());
@@ -22,9 +24,11 @@ app.get('/healthcheck', (req, res, next) => {
   res.json({ message: 'server is Up and Running!' });
 });
 
-app.use('/user', userRouter);
-app.use('/city', cityRouter);
-app.use('/place', placeRouter);
+app.use('/users', userRouter);
+app.use('/cities', cityRouter);
+app.use('/places', placeRouter);
+app.use('/polls', pollRouter);
+app.use('/votes', voteRouter);
 
 
 // 404 handler

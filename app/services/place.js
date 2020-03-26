@@ -2,7 +2,7 @@ const db = require('../../models');
 const { Op } = db.Sequelize;
 
 exports.getPlaceById = async id => {
-  const place = await db.place.findOne({ where: { id }, include: [db.user, db.cityId], raw: true });
+  const place = await db.place.findOne({ where: { id }, include: [db.user, db.city], raw: true });
   if(!place) return { err: `Place with ID ${id} is not found`, status: 404 };
   return { place };
 }
