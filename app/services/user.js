@@ -29,7 +29,7 @@ exports.registerUser = async reqBody => {
 exports.login = async (reqBody) => {
   const { err, user, status } = await getUserByEmail(reqBody.email);
   if(err) return { err , status };
-  const validPassword = verifyPassword(reqBody.password, user.password);
+  const validPassword = await verifyPassword(reqBody.password, user.password);
   if(!validPassword) return { err: 'password is wrong!', status: 406 };
   delete user.password;
   const response = {
@@ -40,4 +40,14 @@ exports.login = async (reqBody) => {
     }
   }
   return { response };
+}
+
+exports.changePassword = async ({ user, body }) => {
+  const { id } = user;
+  const { oldPassword, newPassword } = body;
+  const result = await getUserById(id);
+  const validPassword = await verifyPassword(oldPassword, result.user.password);
+  if(!validPassword) return { err: 'password is wrong!', status: 406 };
+  await db.user.update({ password: await hashPassword(newPassword)}, { where: { id }});
+  return { response: 'success!' };
 }
