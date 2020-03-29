@@ -3,7 +3,7 @@ exports.addPlaceSchema = {
   "required": [
     "name",
     "cityId",
-    "location"
+    "location",
   ],
   "properties": {
     "name": {
@@ -13,28 +13,14 @@ exports.addPlaceSchema = {
       "errorMessage": "please send me name of the place!"
     },
     "cityId": {
-      "type": "number",
-      "minimum": 1,
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
       "errorMessage": "please send me cityId!"
     },
     "location": {
-      "type": "object",
-      "required": [
-        "lat",
-        "long",
-      ],
-      "properties": {
-        "lat": {
-          "type": "number",
-          "minimum": 1,
-          "errorMessage": "please send me location lat. of the place!"
-        },
-        "long": {
-          "type": "number",
-          "minimum": 1,
-          "errorMessage": "please send me location long. of the place!"
-        }
-      }
-    }
+      "type": "string",
+      "pattern": '{"lat":\\d+(\\.\\d+),"long":\\d+(\\.\\d+)}'
+    },
   }
 }

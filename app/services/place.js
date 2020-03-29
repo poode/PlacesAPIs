@@ -1,3 +1,7 @@
+const path = require('path');
+const fs = require('fs').promises;
+
+const { SERVER_URL, IMAGE_MAX_COUNT } = require('../../config/serverConfig');
 const db = require('../../models');
 const { Op } = db.Sequelize;
 
@@ -14,14 +18,31 @@ async function getPlaceByName(name) {
 }
 exports.getPlaceByName = getPlaceByName;
 
-exports.createPlace = async (reqBody, userId) => {
-  const { err, place, status } = await getPlaceByName(reqBody.name);
-  if (place) {
-    return { err: `The place with name ${reqBody.name} is already found`, status: 409 };
-  }
-  const createdPlace = await db.place.create({...reqBody, userId});
+exports.createPlace = async (req, userId) => {
+  const { err, place, status } = await getPlaceByName(req.body.name);
 
-  return { createdPlace };
+  if (place) {
+    req.files.forEach(async image => {
+      await fs.unlink(path.resolve(image.path));
+    });
+
+    return { err: `The place with name ${req.body.name} is already found`, status: 409 };
+  }
+
+  if(!req.files.length) return { err: `The place must have ${IMAGE_MAX_COUNT} images by max!`, status: 400}
+  req.body.location = JSON.parse(req.body.location);
+
+  try {
+    const createdPlace = await db.place.create({...req.body, userId}, { raw: true });
+    req.files.forEach(async ({ path }) => {
+      await db.placeImage
+        .create({ placeId: createdPlace.id, imageUrl: `${SERVER_URL}${path}` });
+    });
+    return { createdPlace };
+  } catch (error) {
+    console.log(error);
+    return { err: 'something is wrong please try later!', status: 417 };
+  }
 }
 
 exports.searchForPlace = async reqQuery => {
@@ -31,7 +52,14 @@ exports.searchForPlace = async reqQuery => {
         [Op.like]: `%${reqQuery.name}%`
       }
     },
-    include: [{ model: db.user, attributes: ['email', 'name']}, db.city],
+    include: [{
+      model: db.user,
+      attributes: ['email', 'name']},
+      {
+        model: db.placeImage,
+        attributes: ['imageUrl']
+      },
+      db.city],
   });
   return placeList;
 }

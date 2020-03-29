@@ -4,7 +4,7 @@ const { ServerError } = require('../../config/serverConfig');
 module.exports = new class PlaceController {
   self = this;
   async addPlace(req, res, next) {
-    const { err, createdPlace, status } = await createPlace(req.body, req.user.id);
+    const { err, createdPlace, status } = await createPlace(req, req.user.id);
     if(err) return next(new ServerError(err, status));
     res.json({ message: 'success!', data: createdPlace });
   }
