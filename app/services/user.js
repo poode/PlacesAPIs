@@ -14,11 +14,35 @@ async function getUserByEmail(email) {
 };
 exports.getUserByEmail = getUserByEmail;
 
+async function getUserByUsername(username) {
+  const user = await db.user.findOne({
+    where: {
+      username
+    },
+    raw: true
+  });
+  if (user) return {
+    err: `User with username ${username} is found please try another username`,
+    status: 400
+  };
+
+  return {
+    isUniqueUsername: true
+  };
+};
+exports.getUserByEmail = getUserByEmail;
+
 exports.registerUser = async reqBody => {
   const { err, user} = await getUserByEmail(reqBody.email);
   if (user) {
     return { err: `User with email ${reqBody.email} is already found`, status: 409 };
   }
+
+  const duplicated = await getUserByUsername(reqBody.username);
+  if (duplicated.err) {
+    return { err, status };
+  }
+
   reqBody.password = await hashPassword(reqBody.password);
   const createdUser = await db.user.create(reqBody);
   console.log(createdUser.dataValues)

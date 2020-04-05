@@ -2,7 +2,8 @@ exports.registerUserSchema = {
     "type": "object",
     "required": [
       "email",
-      "password"
+      "password",
+      "username"
     ],
     "properties": {
       "email": {
@@ -10,6 +11,12 @@ exports.registerUserSchema = {
         "maxLength": 150,
         "format": "email",
         "errorMessage": "please provide me with valid email!"
+      },
+      "username": {
+        "type": "string",
+        "maxLength": 255,
+        "minLength": 3,
+        "errorMessage": "please provide me with valid username!"
       },
       "password": {
         "type": "string",

@@ -14,6 +14,7 @@ module.exports = {
         name: 'Administrator',
         email: 'admin@admin.com',
         role: 'admin',
+        username: 'admin',
         password: await hashPassword(process.env.ADMIN_PASSWORD),
         createdAt: new Date(),
         updatedAt: new Date(),
