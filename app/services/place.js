@@ -34,11 +34,11 @@ exports.createPlace = async (req, userId) => {
 
   try {
     const createdPlace = await db.place.create({...req.body, userId}, { raw: true });
-    req.files.forEach(async ({ path }) => {
-      await db.placeImage
+    const images = await Promise.all(req.files.map(async ({ path }) => {
+      return db.placeImage
         .create({ placeId: createdPlace.id, imageUrl: `${SERVER_URL}${path}` });
-    });
-    return { createdPlace };
+    }));
+    return { createdPlace,  images };
   } catch (error) {
     console.log(error);
     return { err: 'something is wrong please try later!', status: 417 };
