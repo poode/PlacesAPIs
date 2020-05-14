@@ -29,6 +29,19 @@ exports.createPlace = async (req, userId) => {
     return { err: `The place with name ${req.body.name} is already found`, status: 409 };
   }
 
+  const city = await db.city.findOne({
+    where: {
+      id: req.body.cityId
+    }
+  });
+
+  if(!city) {
+    return {
+      err: `City with id ${req.body.cityId} is not found please use valid city id`,
+      status: 400,
+    };
+  }
+
   if(!req.files.length) return { err: `The place must have ${IMAGE_MAX_COUNT} images by max!`, status: 400}
   req.body.location = JSON.parse(req.body.location);
 
