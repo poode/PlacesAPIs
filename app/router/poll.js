@@ -7,8 +7,7 @@ const { addPollSchema, getPollListSchema } = require('../RequestSchemaList/addPo
 
 const { self, addPoll, getPollList } = require('../controllers/Poll');
 
-router.post('/', jwt, validate(addPollSchema), addPoll.bind(self));
-router.get('/', jwt, getPollList.bind(self));
+router.post('/', jwt(), validate(addPollSchema), addPoll.bind(self));
+router.get('/', jwt(), getPollList.bind(self));
 
 exports.pollRouter = router;
-

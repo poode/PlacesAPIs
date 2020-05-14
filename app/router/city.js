@@ -9,6 +9,6 @@ const { addCitySchema } = require('../RequestSchemaList/addCitySchema');
 const { self, addCity } = require('../controllers/City');
 
 router.post('/', jwt, adminRole, validate(addCitySchema), addCity.bind(self));
-router.post('/users', jwt/*, adminRole*/, validate(addCitySchema), addCity.bind(self));
+router.post('/users', jwt()/*, adminRole*/, validate(addCitySchema), addCity.bind(self));
 
 exports.cityRouter = router;

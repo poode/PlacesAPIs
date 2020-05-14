@@ -11,7 +11,7 @@ const { searchPlaceSchema } = require('../RequestSchemaList/searchPlace');
 
 const { self, addPlace , searchPlace} = require('../controllers/Place');
 
-router.post('/', jwt, upload.array(IMAGE_FIELD, IMAGE_MAX_COUNT), validate(addPlaceSchema), validateLocation,addPlace.bind(self));
-router.get('/', jwt, validate(searchPlaceSchema), searchPlace.bind(self));
+router.post('/', jwt(), upload.array(IMAGE_FIELD, IMAGE_MAX_COUNT), validate(addPlaceSchema), validateLocation,addPlace.bind(self));
+router.get('/', jwt(), validate(searchPlaceSchema), searchPlace.bind(self));
 
 exports.placeRouter = router;
