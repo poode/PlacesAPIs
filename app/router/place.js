@@ -11,6 +11,44 @@ const { searchPlaceSchema } = require('../RequestSchemaList/searchPlace');
 
 const { self, addPlace , searchPlace} = require('../controllers/Place');
 
+/**
+ * @swagger
+ * /places:
+ *   post:
+ *     tags:
+ *       - Places APIs
+ *     description: Any user can add place in a city
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - in: formData
+ *         name: images
+ *         description: The file to upload.
+ *         type: file
+ *         required: true
+ *       - in: formData
+ *         name: name
+ *         description: Place name
+ *         type: string
+ *         required: true
+ *       - in: formData
+ *         name: cityId
+ *         description: City Id
+ *         type: string
+ *         required: true
+ *       - in: formData
+ *         name: location
+ *         description: location of the place and should be valid stringified object eg":" {lat":" 30, long":" 29}
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns created City
+ */
 router.post('/', jwt(), upload.array(IMAGE_FIELD, IMAGE_MAX_COUNT), validate(addPlaceSchema), validateLocation,addPlace.bind(self));
 router.get('/', jwt(), validate(searchPlaceSchema), searchPlace.bind(self));
 
