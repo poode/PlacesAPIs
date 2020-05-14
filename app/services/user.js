@@ -67,6 +67,22 @@ exports.login = async (reqBody) => {
   return { response };
 }
 
+exports.socialLogin = async ({ user }) => {
+  if(!user._json.email) return { err: 'please allow us to read your email' , status: 400 };
+  const found = await getUserByEmail(user._json.email);
+  if(found.err) return { err: found.err , status: found.status };
+
+  delete found.user.password;
+  const response = {
+    message: 'success', 
+    data: {
+      user: found.user,
+      token: signToken(found.user)
+    }
+  }
+  return { response };
+}
+
 exports.changePassword = async ({ user, body }) => {
   const { id } = user;
   const { oldPassword, newPassword } = body;

@@ -1,5 +1,5 @@
 const { signToken } = require('../services/strategies/util');
-const { getUserByEmail, registerUser, login, changePassword } = require('../services/user');
+const { getUserByEmail, registerUser, login, changePassword, socialLogin } = require('../services/user');
 const { ServerError } = require('../../config/serverConfig');
 
 module.exports = new class UserController {
@@ -29,6 +29,12 @@ module.exports = new class UserController {
 
   async login(req, res, next) {
     const { response, err, status } = await login(req.body);
+    if(err) return next(new ServerError(err, status));
+    res.json(response);
+  }
+
+  async loginWithSocial(req, res, next) {
+    const { response, err, status } = await socialLogin(req);
     if(err) return next(new ServerError(err, status));
     res.json(response);
   }

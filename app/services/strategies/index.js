@@ -17,6 +17,6 @@ module.exports = {
   facebook: (options = {}) => passport.authenticate('facebook', options),
   google: (options = {}) => passport.authenticate('google', options),
   facebookToken: (options = {}) => passport.authenticate('facebook-token', options),
-  googleToken: (options = {}) => passport.authenticate('google-id-token', options),
+  googleToken: (options = {}) => passport.authenticate('google-token', options),
   jwt: (options = {}) => passport.authenticate('jwt', options),
 };

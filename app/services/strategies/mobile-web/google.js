@@ -1,6 +1,6 @@
 const passport = require('passport');
 const dotenv = require('dotenv');
-const GoogleTokenStrategy = require('passport-google-id-token');
+const GoogleTokenStrategy = require('passport-google-token').Strategy;
 
 dotenv.config();
 
@@ -16,6 +16,6 @@ exports.googleTokenStrategy = new GoogleTokenStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET
   },
-  function(parsedToken, googleId, done) {
-    done(null, googleId);
+  function(accessToken, refreshToken, profile, done) {
+    done(null, profile);
   });

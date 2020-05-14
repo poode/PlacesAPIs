@@ -1,13 +1,13 @@
 const router = require('express-promise-router')();
 
-const { facebook, google, jwt } = require('../services/strategies');
+const { facebook, google, jwt, facebookToken, googleToken } = require('../services/strategies');
 const { validate } = require('../middelwares/validator');
 
 const { registerUserSchema } = require('../RequestSchemaList/registerUser');
 const { loginSchema } = require('../RequestSchemaList/loginSchema');
 const { changePasswordSchema } = require('../RequestSchemaList/changePasswordSchema');
 
-const { self, auth, register, login, changePassword } = require('../controllers/User');
+const { self, auth, register, login, changePassword, loginWithSocial } = require('../controllers/User');
 
 /**
  * @swagger
@@ -144,5 +144,8 @@ router.post('/register', validate(registerUserSchema), register.bind(self));
  *         description: Returns an object with message property and its value is `success`
  */
 router.post('/change-password', validate(changePasswordSchema), jwt() ,changePassword.bind(self));
+
+router.post('/auth/facebook', facebookToken(), loginWithSocial.bind(self));
+router.post('/auth/google', googleToken(), loginWithSocial.bind(self));
 
 exports.userRouter = router;
