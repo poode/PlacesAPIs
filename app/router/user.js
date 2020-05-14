@@ -16,7 +16,7 @@ const { self, auth, register, login, changePassword, loginWithSocial } = require
  *     tags:
  *       - Social Login
  *     description: We use this to allow user to login via facebook, If his email in facebook is the same with registered user. Note That this URL will redirect you to facebook for authorization so do not try here in swagger as it will not work also swagger is an application/json environment.
- *     summary: Social Login for facebook
+ *     summary: Social Login for facebook using redirection
  *     produces:
  *       - application/json
  */
@@ -31,7 +31,7 @@ router.get('/facebook',facebook({
  *     tags:
  *       - Social Login
  *     description: We use this to allow user to login via google, If his email in google is the same with registered user. Note That this URL will redirect you to google for authorization so do not try here in swagger as it will not work also swagger is an application/json environment.
- *     summary: Social Login for google
+ *     summary: Social Login for google using redirection
  *     produces:
  *       - application/json
  */
@@ -145,7 +145,56 @@ router.post('/register', validate(registerUserSchema), register.bind(self));
  */
 router.post('/change-password', validate(changePasswordSchema), jwt() ,changePassword.bind(self));
 
+/**
+ * @swagger
+ * /users/auth/facebook:
+ *   post:
+ *     tags:
+ *       - Social Login
+ *     description: allow user to login using facebook access token.
+ *     summary: Social Login for facebook using access token
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               access_token:
+ *                  description: user's access token after approving the app permissions
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns the user with his jwt
+ */
 router.post('/auth/facebook', facebookToken(), loginWithSocial.bind(self));
+
+/**
+ * @swagger
+ * /users/auth/google:
+ *   post:
+ *     tags:
+ *       - Social Login
+ *     description: allow user to login using google access token.
+ *     summary: Social Login for google using access token
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               access_token:
+ *                  description: user's access token after approving the app permissions
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns the user with his jwt
+ */
 router.post('/auth/google', googleToken(), loginWithSocial.bind(self));
 
 exports.userRouter = router;
