@@ -5,8 +5,8 @@ const passport = require('passport');
 const path = require('path');
 const morgan = require('morgan');
 
-const { ServerError, IMAGE_BASE_URL } = require('../config/serverConfig');
-const { requestLogger } = require('./middelwares/requestLogger');
+const { ServerError, IMAGE_STORAGE, SWAGGER_BASE_URL } = require('../config/serverConfig');
+const { swaggerDocs } = require('./util');
 
 const { userRouter } = require('./router/user');
 const { cityRouter } = require('./router/city');
@@ -18,7 +18,8 @@ const app = express();
 app.use(passport.initialize());
 app.use(cors());
 app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev': 'tiny'));
-app.use(IMAGE_BASE_URL,express.static(path.resolve(`.${IMAGE_BASE_URL}`)));
+app.use(`/${IMAGE_STORAGE}`,express.static(path.resolve(`./${IMAGE_STORAGE}`)));
+app.use(SWAGGER_BASE_URL, express.static(path.resolve(`.${SWAGGER_BASE_URL}`)));
 app.use(express.json());
 
 app.use(trimRequest.all);
@@ -32,6 +33,9 @@ app.use('/cities', cityRouter);
 app.use('/places', placeRouter);
 app.use('/polls', pollRouter);
 app.use('/votes', voteRouter);
+app.get('/swagger.json', (req, res) => {
+  res.send(swaggerDocs(req, { url: process.env.SERVER_URL }));
+});
 
 
 // 404 handler

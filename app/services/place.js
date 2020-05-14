@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs').promises;
 
-const { SERVER_URL, IMAGE_MAX_COUNT } = require('../../config/serverConfig');
+const { IMAGE_MAX_COUNT } = require('../../config/serverConfig');
 const db = require('../../models');
 const { Op } = db.Sequelize;
 
@@ -36,7 +36,7 @@ exports.createPlace = async (req, userId) => {
     const createdPlace = await db.place.create({...req.body, userId}, { raw: true });
     const images = await Promise.all(req.files.map(async ({ path }) => {
       return db.placeImage
-        .create({ placeId: createdPlace.id, imageUrl: `${SERVER_URL}${path}` });
+        .create({ placeId: createdPlace.id, imageUrl: `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_URL}/${path}` });
     }));
     return { createdPlace,  images };
   } catch (error) {

@@ -41,6 +41,7 @@
     "passport-jwt": "^4.0.0",
     "randomatic": "^3.1.1",
     "sequelize": "^5.21.5",
+    "swagger-jsdoc": "^4.0.0",
     "trim-request": "^1.0.6"
   },
   "devDependencies": {
