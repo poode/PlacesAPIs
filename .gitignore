@@ -3,4 +3,7 @@ node_modules
 .vscode-janus-debug
 .history
 .vscode
-uploads
+uploads/images/*.jpeg
+uploads/images/*.jpg
+uploads/images/*.gif
+uploads/images/*.png
