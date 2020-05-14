@@ -1,11 +1,12 @@
 const db = require('../../models');
 const { hashPassword, signToken, verifyPassword } = require('./strategies/util');
 
-exports.getUserById = async id => {
+const getUserById = async id => {
   const user = await db.user.findOne({ where: { id }, raw: true });
   if(!user) return { err: `User with ID ${id} is not found`, status: 404 };
   return { user };
 }
+exports.getUserById = getUserById
 
 async function getUserByEmail(email) {
   const user = await db.user.findOne({ where: { email }, raw: true });

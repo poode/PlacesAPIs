@@ -1,46 +1,41 @@
 const router = require('express-promise-router')();
 
-const { facebook, google, jwt, passport } = require('../services/strategies');
+const { facebook, google, jwt } = require('../services/strategies');
 const { validate } = require('../middelwares/validator');
 
 const { registerUserSchema } = require('../RequestSchemaList/registerUser');
 const { loginSchema } = require('../RequestSchemaList/loginSchema');
+const { changePasswordSchema } = require('../RequestSchemaList/changePasswordSchema');
 
-const { self, auth, register, login } = require('../controllers/User');
+const { self, auth, register, login, changePassword } = require('../controllers/User');
 
 /**
  * @swagger
  * /users/facebook:
- *   post:
+ *   get:
  *     tags:
- *       - Registration And Login
- *     description: Register Users
- *     summary: we use this to allow user to login
+ *       - Social Login
+ *     description: We use this to allow user to login via facebook, If his email in facebook is the same with registered user. Note That this URL will redirect you to facebook for authorization so do not try here in swagger as it will not work also swagger is an application/json environment.
+ *     summary: Social Login for facebook
  *     produces:
  *       - application/json
- *     parameters:
- *       - name: body
- *         in: body
- *         schema:
- *            type: object
- *            properties:
- *               email:
- *                  description: valid email
- *                  required: true
- *                  type: string
- *               password:
- *                  description: password length must be at least 6
- *                  required: true
- *                  type: string
- *     responses:
- *       200:
- *         description: Returns the user with JWT
  */
-router.get('/facebook', passport.authenticate('facebook', {
+router.get('/facebook',facebook({
   scope: ['email']
 }));
 
-router.get('/google', passport.authenticate('google', {
+/**
+ * @swagger
+ * /users/google:
+ *   get:
+ *     tags:
+ *       - Social Login
+ *     description: We use this to allow user to login via google, If his email in google is the same with registered user. Note That this URL will redirect you to google for authorization so do not try here in swagger as it will not work also swagger is an application/json environment.
+ *     summary: Social Login for google
+ *     produces:
+ *       - application/json
+ */
+router.get('/google', google({
   scope: [
     'https://www.googleapis.com/auth/userinfo.profile',
     'https://www.googleapis.com/auth/userinfo.email',
@@ -58,7 +53,7 @@ router.get('/google/callback', google(), auth.bind(self));
  * /users/login:
  *   post:
  *     tags:
- *       - Registration And Login
+ *       - Registration And Basic Login
  *     description: Register Users
  *     summary: we use this to allow user to login
  *     produces:
@@ -88,7 +83,7 @@ router.post('/login', validate(loginSchema), login.bind(self));
  * /users/register:
  *   post:
  *     tags:
- *       - Registration And Login
+ *       - Registration And Basic Login
  *     description: Register Users
  *     produces:
  *       - application/json
@@ -99,21 +94,55 @@ router.post('/login', validate(loginSchema), login.bind(self));
  *            type: object
  *            properties:
  *               email:
- *                  description: tx string which will be used to register user based on his type
+ *                  description: User's email
  *                  required: true
  *                  type: string
  *               username:
- *                  description: username provided by user
+ *                  description: username
  *                  required: true
  *                  type: string
  *               password:
- *                  description: user's password
+ *                  description: User's password
  *                  required: true
  *                  type: string
  *     responses:
  *       200:
- *         description: Returns the user with jwt
+ *         description: Returns the new created user
  */
 router.post('/register', validate(registerUserSchema), register.bind(self));
+
+/**
+ * @swagger
+ * /users/change-password:
+ *   post:
+ *     tags:
+ *       - Registration And Basic Login
+ *     description: Change user password
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               oldPassword:
+ *                  description: old password for the user
+ *                  required: true
+ *                  type: string
+ *               newPassword:
+ *                  description: new password for the user
+ *                  required: true
+ *                  type: string
+ * 
+ *     responses:
+ *       200:
+ *         description: Returns an object with message property and its value is `success`
+ */
+router.post('/change-password', validate(changePasswordSchema), jwt() ,changePassword.bind(self));
 
 exports.userRouter = router;
