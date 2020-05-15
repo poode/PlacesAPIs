@@ -9,6 +9,8 @@
  *       - application/json
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
@@ -37,6 +39,8 @@
  *       - multipart/form-data
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
@@ -76,10 +80,14 @@
  *       - application/json
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
  *       - name: name
+ *         schema:
+ *            type: string
  *         description: it is the place name
  *         in: query
  *         required: true
@@ -100,6 +108,8 @@
  *       - application/json
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
@@ -132,10 +142,14 @@
  *       - application/json
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
  *       - name: placeId
+ *         schema:
+ *            type: string
  *         description: it is the place id
  *         in: query
  *         required: true
@@ -154,6 +168,9 @@
  *     summary: Social Login for facebook using redirection
  *     produces:
  *       - application/json
+ *     responses:
+ *       200:
+ *         description: Returns Returns the user with jwt
  */
 
  /**
@@ -166,6 +183,9 @@
  *     summary: Social Login for google using redirection
  *     produces:
  *       - application/json
+ *     responses:
+ *       200:
+ *         description: Returns the user with jwt
  */
 
  /**
@@ -240,6 +260,8 @@
  *       - application/json
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
@@ -324,6 +346,8 @@
  *       - application/json
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
@@ -360,6 +384,8 @@
  *       - application/json
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
@@ -379,6 +405,8 @@
  *       - application/json
  *     parameters:
  *       - name: x-auth-token
+ *         schema:
+ *            type: string
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
