@@ -20,7 +20,7 @@ function swaggerDocs(req, options) {
           basePath: '/'
         },
         // path to the API docs
-        apis: ['./**/router/*.js'] // pass all in array
+        apis: ['./**/documentation/*.dw'] // pass all in array
       })
 }
 

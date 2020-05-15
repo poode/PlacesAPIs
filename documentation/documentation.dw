@@ -1,0 +1,401 @@
+/**
+ * @swagger
+ * /cities:
+ *   post:
+ *     tags:
+ *       - Cities APIs
+ *     description: Any user can add city
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               name:
+ *                  description: City name
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns created City
+ */
+
+ /**
+ * @swagger
+ * /places:
+ *   post:
+ *     tags:
+ *       - Places APIs
+ *     description: Any user can add place in a city
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - in: formData
+ *         name: images
+ *         description: The file to upload.
+ *         type: file
+ *         required: true
+ *       - in: formData
+ *         name: name
+ *         description: Place name
+ *         type: string
+ *         required: true
+ *       - in: formData
+ *         name: cityId
+ *         description: City Id
+ *         type: string
+ *         required: true
+ *       - in: formData
+ *         name: location
+ *         description: location of the place and should be valid stringified object eg":" {lat":" 30, long":" 29}
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns created City
+ */
+
+ /**
+ * @swagger
+ * /places:
+ *   get:
+ *     tags:
+ *       - Places APIs
+ *     description: Any user can search for a place by its name
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: name
+ *         description: it is the place name
+ *         in: query
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns found places
+ */
+
+ /**
+ * @swagger
+ * /polls:
+ *   post:
+ *     tags:
+ *       - Polls APIs
+ *     description: User can add poll for a certain place
+ *     summary: User can add poll for a certain place
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               text:
+ *                  description: poll text to be voted later by users
+ *                  required: true
+ *                  type: string
+ *               placeId:
+ *                  description: place ID we can get from user's places added by him/her
+ *                  required: true
+ *                  type: number
+ *     responses:
+ *       200:
+ *         description: Returns created poll
+ */
+
+ /**
+ * @swagger
+ * /polls:
+ *   get:
+ *     tags:
+ *       - Polls APIs
+ *     description: Any user can get votes for certain place by its ID
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: placeId
+ *         description: it is the place id
+ *         in: query
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns found polls for this place
+ */
+
+ /**
+ * @swagger
+ * /users/facebook:
+ *   get:
+ *     tags:
+ *       - Social Login
+ *     description: We use this to allow user to login via facebook, If his email in facebook is the same with registered user. Note That this URL will redirect you to facebook for authorization so do not try here in swagger as it will not work also swagger is an application/json environment.
+ *     summary: Social Login for facebook using redirection
+ *     produces:
+ *       - application/json
+ */
+
+ /**
+ * @swagger
+ * /users/google:
+ *   get:
+ *     tags:
+ *       - Social Login
+ *     description: We use this to allow user to login via google, If his email in google is the same with registered user. Note That this URL will redirect you to google for authorization so do not try here in swagger as it will not work also swagger is an application/json environment.
+ *     summary: Social Login for google using redirection
+ *     produces:
+ *       - application/json
+ */
+
+ /**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     tags:
+ *       - Registration And Basic Login
+ *     description: Register Users
+ *     summary: we use this to allow user to login
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               email:
+ *                  description: valid email
+ *                  required: true
+ *                  type: string
+ *               password:
+ *                  description: password length must be at least 6
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns the user with JWT
+ */
+
+ /**
+ * @swagger
+ * /users/register:
+ *   post:
+ *     tags:
+ *       - Registration And Basic Login
+ *     description: Register Users
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               email:
+ *                  description: User's email
+ *                  required: true
+ *                  type: string
+ *               username:
+ *                  description: username
+ *                  required: true
+ *                  type: string
+ *               password:
+ *                  description: User's password
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns the new created user
+ */
+
+ /**
+ * @swagger
+ * /users/change-password:
+ *   post:
+ *     tags:
+ *       - Registration And Basic Login
+ *     description: Change user password
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               oldPassword:
+ *                  description: old password for the user
+ *                  required: true
+ *                  type: string
+ *               newPassword:
+ *                  description: new password for the user
+ *                  required: true
+ *                  type: string
+ * 
+ *     responses:
+ *       200:
+ *         description: Returns an object with message property and its value is `success`
+ */
+
+ /**
+ * @swagger
+ * /users/auth/facebook:
+ *   post:
+ *     tags:
+ *       - Social Login
+ *     description: allow user to login using facebook access token generated for facebook application where frontend and backend should use same application credentials.
+ *     summary: Social Login for facebook using access token generated for facebook application
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               access_token:
+ *                  description: user's access token after approving the app permissions
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns the user with his jwt
+ */
+
+ /**
+ * @swagger
+ * /users/auth/google:
+ *   post:
+ *     tags:
+ *       - Social Login
+ *     description: allow user to login using google access token generated for google application where frontend and backend should use same application credentials.
+ *     summary: Social Login for google using access token generated for google application
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               access_token:
+ *                  description: user's access token after approving the app permissions
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns the user with his jwt
+ */
+
+ /**
+ * @swagger
+ * /users/profile:
+ *   post:
+ *     tags:
+ *       - User Profile
+ *     description: user update his profile
+ *     summary: user update his profile
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               email:
+ *                  description: valid email
+ *                  required: true
+ *                  type: string
+ *               username:
+ *                  description: username
+ *                  required: true
+ *                  type: string
+ *               name:
+ *                  description: name of the user
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns the user profile after getting updated
+ */
+
+ /**
+ * @swagger
+ * /users/profile:
+ *   get:
+ *     tags:
+ *       - User Profile
+ *     description: get user profile
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns user's profile
+ */
+
+ /**
+ * @swagger
+ * /votes:
+ *   get:
+ *     tags:
+ *       - Vote Polls APIs
+ *     description: Any user can vote for certain poll by its ID and place ID
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               placeId:
+ *                  description: place Id
+ *                  required: true
+ *                  type: number
+ *               pollId:
+ *                  description: poll Id
+ *                  required: true
+ *                  type: number
+ *     responses:
+ *       200:
+ *         description: Returns vote for this poll
+ */
