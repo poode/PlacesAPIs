@@ -122,3 +122,10 @@ exports.updateUserProfile = async ({ user, body }) => {
   delete newProfile.password;
   return { updatedUser: newProfile };
 }
+
+exports.getUserProfile = async ({ user }) => {
+  const found = await getUserByEmail(user.email);
+  if(found.err) return { err: found.err, status: found.status };
+  delete found.user.password;
+  return { user: found.user };
+}

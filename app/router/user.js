@@ -8,7 +8,16 @@ const { loginSchema } = require('../RequestSchemaList/loginSchema');
 const { changePasswordSchema } = require('../RequestSchemaList/changePasswordSchema');
 const { updateUserProfileSchema } = require('../RequestSchemaList/updateUserProfileSchema');
 
-const { self, auth, register, login, changePassword, loginWithSocial, updateProfile } = require('../controllers/User');
+const {
+  self,
+  auth,
+  register,
+  login,
+  changePassword,
+  loginWithSocial,
+  updateProfile,
+  getProfile
+} = require('../controllers/User');
 
 /**
  * @swagger
@@ -236,4 +245,24 @@ router.post('/auth/google', googleToken(), loginWithSocial.bind(self));
  */
 router.post('/profile', jwt(), validate(updateUserProfileSchema), updateProfile.bind(self));
 
+
+/**
+ * @swagger
+ * /users/profile:
+ *   get:
+ *     tags:
+ *       - User Profile
+ *     description: get user profile
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns user's profile
+ */
+router.get('/profile', jwt(), getProfile.bind(self));
 exports.userRouter = router;

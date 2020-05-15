@@ -5,7 +5,8 @@ const {
   login,
   changePassword,
   socialLogin,
-  updateUserProfile
+  updateUserProfile,
+  getUserProfile,
 } = require('../services/user');
 const { ServerError } = require('../../config/serverConfig');
 
@@ -56,6 +57,12 @@ module.exports = new class UserController {
     const { updatedUser, err, status } = await updateUserProfile(req);
     if(err) return next(new ServerError(err, status));
     res.json({ profile: updatedUser });
+  }
+
+  async getProfile(req, res, next) {
+    const { user, err, status } = await getUserProfile(req);
+    if(err) return next(new ServerError(err, status));
+    res.json({ profile: user });
   }
 
 }
