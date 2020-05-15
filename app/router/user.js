@@ -6,8 +6,9 @@ const { validate } = require('../middelwares/validator');
 const { registerUserSchema } = require('../RequestSchemaList/registerUser');
 const { loginSchema } = require('../RequestSchemaList/loginSchema');
 const { changePasswordSchema } = require('../RequestSchemaList/changePasswordSchema');
+const { updateUserProfileSchema } = require('../RequestSchemaList/updateUserProfileSchema');
 
-const { self, auth, register, login, changePassword, loginWithSocial } = require('../controllers/User');
+const { self, auth, register, login, changePassword, loginWithSocial, updateProfile } = require('../controllers/User');
 
 /**
  * @swagger
@@ -196,5 +197,43 @@ router.post('/auth/facebook', facebookToken(), loginWithSocial.bind(self));
  *         description: Returns the user with his jwt
  */
 router.post('/auth/google', googleToken(), loginWithSocial.bind(self));
+
+/**
+ * @swagger
+ * /users/profile:
+ *   post:
+ *     tags:
+ *       - User Profile
+ *     description: user update his profile
+ *     summary: user update his profile
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               email:
+ *                  description: valid email
+ *                  required: true
+ *                  type: string
+ *               username:
+ *                  description: username
+ *                  required: true
+ *                  type: string
+ *               name:
+ *                  description: name of the user
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns the user profile after getting updated
+ */
+router.post('/profile', jwt(), validate(updateUserProfileSchema), updateProfile.bind(self));
 
 exports.userRouter = router;

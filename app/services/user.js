@@ -16,6 +16,13 @@ async function getUserByEmail(email) {
 exports.getUserByEmail = getUserByEmail;
 
 async function getUserByUsername(username) {
+  const user = await db.user.findOne({ where: { username }, raw: true });
+  if(!user) return { err: `User with username ${username} is not found`, status: 404 };
+  return { user };
+};
+exports.getUserByUsername = getUserByUsername;
+
+async function getUserByUsername(username) {
   const user = await db.user.findOne({
     where: {
       username
@@ -91,4 +98,27 @@ exports.changePassword = async ({ user, body }) => {
   if(!validPassword) return { err: 'password is wrong!', status: 406 };
   await db.user.update({ password: await hashPassword(newPassword)}, { where: { id }});
   return { response: 'success!' };
+}
+
+exports.updateUserProfile = async ({ user, body }) => {
+  const emailFound = await getUserByEmail(body.email);
+
+  if(emailFound.user && emailFound.user.id !== user.id) {
+    return { err: `Please use another email as ${body.email} already used`, status: 400 };
+  }
+  const usernameFound = await getUserByUsername(body.username);
+
+  if(usernameFound.user && usernameFound.user.id !== user.id) {
+    return { err: `Please use another username as ${body.username} already used`, status: 400 };
+  }
+
+  await db.user.update(body,{
+    where: {
+      id: user.id
+    }
+  });
+
+  const newProfile = await db.user.findOne({ where: { id: user.id }, raw: true });
+  delete newProfile.password;
+  return { updatedUser: newProfile };
 }

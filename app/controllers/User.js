@@ -1,5 +1,12 @@
 const { signToken } = require('../services/strategies/util');
-const { getUserByEmail, registerUser, login, changePassword, socialLogin } = require('../services/user');
+const {
+  getUserByEmail,
+  registerUser,
+  login,
+  changePassword,
+  socialLogin,
+  updateUserProfile
+} = require('../services/user');
 const { ServerError } = require('../../config/serverConfig');
 
 module.exports = new class UserController {
@@ -43,6 +50,12 @@ module.exports = new class UserController {
     const { response, err, status } = await changePassword(req);
     if(err) return next(new ServerError(err, status));
     res.json({ message: response });
+  }
+
+  async updateProfile(req, res, next) {
+    const { updatedUser, err, status } = await updateUserProfile(req);
+    if(err) return next(new ServerError(err, status));
+    res.json({ profile: updatedUser });
   }
 
 }
