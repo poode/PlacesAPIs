@@ -151,8 +151,8 @@ router.post('/change-password', validate(changePasswordSchema), jwt() ,changePas
  *   post:
  *     tags:
  *       - Social Login
- *     description: allow user to login using facebook access token.
- *     summary: Social Login for facebook using access token
+ *     description: allow user to login using facebook access token generated for facebook application where frontend and backend should use same application credentials.
+ *     summary: Social Login for facebook using access token generated for facebook application
  *     produces:
  *       - application/json
  *     parameters:
@@ -177,8 +177,8 @@ router.post('/auth/facebook', facebookToken(), loginWithSocial.bind(self));
  *   post:
  *     tags:
  *       - Social Login
- *     description: allow user to login using google access token.
- *     summary: Social Login for google using access token
+ *     description: allow user to login using google access token generated for google application where frontend and backend should use same application credentials.
+ *     summary: Social Login for google using access token generated for google application
  *     produces:
  *       - application/json
  *     parameters:
