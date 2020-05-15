@@ -50,6 +50,29 @@ const { self, addPlace , searchPlace} = require('../controllers/Place');
  *         description: Returns created City
  */
 router.post('/', jwt(), upload.array(IMAGE_FIELD, IMAGE_MAX_COUNT), validate(addPlaceSchema), validateLocation,addPlace.bind(self));
+
+/**
+ * @swagger
+ * /places:
+ *   get:
+ *     tags:
+ *       - Places APIs
+ *     description: Any user can search for a place by its name
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: name
+ *         description: it is the place name
+ *         in: query
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns found places
+ */
 router.get('/', jwt(), validate(searchPlaceSchema), searchPlace.bind(self));
 
 exports.placeRouter = router;
