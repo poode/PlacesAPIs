@@ -14,7 +14,9 @@ module.exports = {
         references: {
           model: 'polls',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       userId: {
         allowNull: false,
@@ -22,7 +24,9 @@ module.exports = {
         references: {
           model: 'users',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,

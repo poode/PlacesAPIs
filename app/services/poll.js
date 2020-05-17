@@ -4,6 +4,7 @@ const { getUserById } = require('../services/user');
 const { getPlaceById } = require('../services/place');
 
 async function getPollById(id) {
+  if(!id) return { err: `id is needed`, status: 400 };
   const poll = await db.poll.findOne({ where: { id }, raw: true });
   if(!poll) return { err: `Poll with ID ${id} is not found`, status: 404 };
   return { poll };
@@ -50,9 +51,35 @@ async function getPollListByPlaceId({ placeId }) {
 }
 exports.getPollListByPlaceId = getPollListByPlaceId;
 
-exports.createPoll = async reqBody => {
-  const { place, err, status } = await getPlaceById(reqBody.placeId);
+exports.createPoll = async ({ user, body }) => {
+  const { place, err, status } = await getPlaceById(body.placeId);
   if(err) return { err, status };
-  const createdPoll = await db.poll.create(reqBody);
+  if(place.userId == user.id || user.role == 'admin'){
+  const createdPoll = await db.poll.create(body);
   return { createdPoll };
+  } else return { err: `You do not own a place with id ${body.placeId}`, status: 401 };
 }
+
+exports.updatePoll = async ({ user, body }) => {
+  const id = body.pollId;
+  const { poll, err, status } = await getPollById(id);
+  if(err) return { err, status };
+  const place = await getPlaceById(poll.placeId);
+  if(place.err) return ({ err: place.err, status: place.status });
+  if(place.place.userId == user.id || user.role == 'admin'){
+  await db.poll.update({ text: body.text }, { where: { id }});
+  return {  response: 'Poll updated!' };
+  } else return { err: `You do not own such poll`, status: 401 };
+}
+
+exports.deletePoll = async ({ user, query }) => {
+  const id = query.id;
+  const { poll, err, status } = await getPollById(id);
+  if(err) return { err, status };
+  const place = await getPlaceById(poll.placeId);
+  if(place.err) return ({ err: place.err, status: place.status });
+  if(place.place.userId == user.id || user.role == 'admin'){
+  await db.poll.destroy({ where: { id }});
+  return { response: 'Poll deleted!' };
+  } else return { err: `You do not own such poll`, status: 401 };
+} 

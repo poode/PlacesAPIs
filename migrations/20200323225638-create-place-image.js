@@ -14,7 +14,9 @@ module.exports = {
         references: {
           model: 'places',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       imageUrl: {
         type: Sequelize.STRING(1000),

@@ -20,7 +20,9 @@ module.exports = {
         references: {
           model: 'cities',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       location: {
         type: Sequelize.JSON,
@@ -32,7 +34,9 @@ module.exports = {
         references: {
           model: 'users',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,

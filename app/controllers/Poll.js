@@ -1,10 +1,16 @@
-const { createPoll, getPollListByPlaceId } = require('../services/poll');
+const {
+   createPoll, 
+   getPollListByPlaceId, 
+   getPollById,
+   updatePoll,
+   deletePoll
+  } = require('../services/poll');
 const { ServerError } = require('../../config/serverConfig');
 
 module.exports = new class PollController {
   self = this;
   async addPoll(req, res, next) {
-    const { err, createdPoll, status } = await createPoll(req.body);
+    const { err, createdPoll, status } = await createPoll(req);
     if(err) return next(new ServerError(err, status));
     res.json({ message: 'success!', data: createdPoll });
   }
@@ -15,4 +21,21 @@ module.exports = new class PollController {
     res.json({ message: 'success!', data: pollListWithVotes });
   }
 
+  async getPollById(req, res, next) {
+    const { err, poll, status } = await getPollById(req.query.id);
+    if(err) return next(new ServerError(err, status));
+    res.json({ message: 'success!', data: poll });
+  }
+
+  async updatePoll(req, res, next) {
+    const { err, response, status } = await updatePoll(req);
+    if(err) return next(new ServerError(err, status));
+    res.json({ message: 'success!', data: response });
+  }
+
+  async deletePoll(req, res, next) {
+    const { err, response, status } = await deletePoll(req);
+    if(err) return next(new ServerError(err, status));
+    res.json({ message: 'success!', data: response });
+  }
 }
