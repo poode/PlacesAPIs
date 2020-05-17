@@ -5,21 +5,21 @@ const { IMAGE_MAX_COUNT } = require('../../config/serverConfig');
 const db = require('../../models');
 const { Op } = db.Sequelize;
 
-exports.getPlaceById = async id => {
+exports.getById = async id => {
   const place = await db.place.findOne({ where: { id }, include: [db.user, db.city], raw: true });
   if(!place) return { err: `Place with ID ${id} is not found`, status: 404 };
   return { place };
 }
 
-async function getPlaceByName(name) {
+async function getByName(name) {
   const place = await db.place.findOne({ where: { name }, include: [db.user, db.city], raw: true });
   if(!place) return { err: `There is no place with name ${name}`, status: 404 }
   return { place }
 }
-exports.getPlaceByName = getPlaceByName;
+exports.getByName = getByName;
 
 exports.createPlace = async (req, userId) => {
-  const { err, place, status } = await getPlaceByName(req.body.name);
+  const { err, place, status } = await getByName(req.body.name);
 
   if (place) {
     req.files.forEach(async image => {
@@ -76,3 +76,35 @@ exports.searchForPlace = async reqQuery => {
   });
   return placeList;
 }
+
+exports.updatePlace = async(newData,id) => {
+  try{
+    let number = Integer.parseInt(id);
+     if(number > 999){
+       return "id should be integer "
+     }
+    }catch(error){
+      return "id should be integer "+ error
+    }
+  const note = await db.place.update(newData,{where: { id: id }});
+  if(note == 1){
+    return "place was updated successfully.";
+  }
+  return "error place not found";
+};
+
+exports.deletePlace = async(id) => {
+  try{
+    let number = Integer.parseInt(id);
+     if(number > 999){
+       return "id should be integer "
+     }
+    }catch(error){
+      return "id should be integer "+ error
+    }
+  const place = await db.place.destroy({where: { id: id }});
+  if(place == 1){
+    return "place was deleted successfully.";
+  }
+  return "error  not place found";
+};

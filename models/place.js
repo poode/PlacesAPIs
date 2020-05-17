@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'cities',
         key: 'id',
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
      },
     location: { 
       type: DataTypes.JSON,
@@ -24,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'users',
         key: 'id',
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
      },
   }, {
     indexes:[

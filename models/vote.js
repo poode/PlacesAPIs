@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'polls',
         key: 'id',
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     },
     userId: {
       allowNull: false,
@@ -15,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'users',
         key: 'id',
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     }
   }, {});
   Vote.associate = function(models) {
