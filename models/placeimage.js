@@ -4,10 +4,12 @@ module.exports = (sequelize, DataTypes) => {
     placeId: { 
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'places',
+      references: { 
+       model: 'places',
         key: 'id',
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
     },
     imageUrl: {
       type: DataTypes.STRING(1000),

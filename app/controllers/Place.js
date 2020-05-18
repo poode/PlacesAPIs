@@ -1,4 +1,4 @@
-const { createPlace, searchForPlace } = require('../services/place');
+const { createPlace, searchForPlace,getByName,getById,updatePlace,deletePlace } = require('../services/place');
 const { ServerError } = require('../../config/serverConfig');
 
 module.exports = new class PlaceController {
@@ -14,4 +14,28 @@ module.exports = new class PlaceController {
     res.json({ message: 'success!', data: placeList})
   }
 
+  async getPlaceByName(req, res, next) {
+    const place = await getByName(req.query.name);
+    res.json({ message: 'success!', data: place})
+  }
+  
+  async getPlaceById(req, res, next) {
+    const place = await getById(req.params.id);
+    res.json({ message: 'success!', data: place})
+  }
+ 
+  async updatePlace(req, res, next) {
+    const { err, city, status } = await updatePlace(req.params.id);
+    if(err) return next(new ServerError(err, status));
+    res.json({ message: 'success!', data: city });
+  }
+
+   
+  async deletePlace(req, res, next) {
+    const { err, city, status } = await deletePlace(req.params.id);
+    if(err) return next(new ServerError(err, status));
+    res.json({ message: 'success!', data: city });
+  }
+
+  
 }

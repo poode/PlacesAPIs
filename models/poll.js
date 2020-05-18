@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'places',
         key: 'id',
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     text: {
       type: DataTypes.STRING(1000),
