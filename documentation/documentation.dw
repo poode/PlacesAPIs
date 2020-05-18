@@ -30,6 +30,115 @@
 
  /**
  * @swagger
+ * /cities/?name:
+ *   get:
+ *     tags:
+ *       - Cities APIs
+ *     description: Any user can get city info using city name.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: query
+ *         in: query
+ *         schema:
+ *            type: object
+ *            properties:
+ *               name:
+ *                  description: City name
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns  City info
+ */
+
+
+ /**
+ * @swagger
+ * /cities/:id:
+ *   get:
+ *     tags:
+ *       - Cities APIs
+ *     description: Any user can get city info using city name.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: param
+ *         in: param
+ *     responses:
+ *       200:
+ *         description: Returns  City info
+ */
+
+ /**
+ * @swagger
+ * /cities/:id:
+ *   put:
+ *     tags:
+ *       - Cities APIs
+ *     description: Any user can get update info using city id.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: param
+ *         in: param
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               name:
+ *                  description: Send the key of the data you need to update
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns  success message
+ */
+
+/**
+ * @swagger
+ * /cities/:id:
+ *   delete:
+ *     tags:
+ *       - Cities APIs
+ *     description: Any user can delete any city using city ID.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: param
+ *         in: param
+ *     responses:
+ *       200:
+ *         description: Returns  success message
+ */
+
+ /**
+ * @swagger
  * /places:
  *   post:
  *     tags:
@@ -94,6 +203,115 @@
  *     responses:
  *       200:
  *         description: Returns found places
+ */
+
+ /**
+ * @swagger
+ * /places/?name:
+ *   get:
+ *     tags:
+ *       - Places APIs
+ *     description: Any user can get place info using place name.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: query
+ *         in: query
+ *         schema:
+ *            type: object
+ *            properties:
+ *               name:
+ *                  description: Place name
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns  places info
+ */
+
+
+ /**
+ * @swagger
+ * /places/:id:
+ *   get:
+ *     tags:
+ *       - Places APIs
+ *     description: Any user can get place info using place name.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: param
+ *         in: param
+ *     responses:
+ *       200:
+ *         description: Returns  place info
+ */
+
+ /**
+ * @swagger
+ * /places/:id:
+ *   put:
+ *     tags:
+ *       - Places APIs
+ *     description: Any user can get update place info using place id.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: param
+ *         in: param
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               name:
+ *                  description: Send the key of the data you need to update
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns  success message
+ */
+
+/**
+ * @swagger
+ * /places/:id:
+ *   delete:
+ *     tags:
+ *       - Places APIs
+ *     description: Any user can delete any place using place ID.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: param
+ *         in: param
+ *     responses:
+ *       200:
+ *         description: Returns  success message
  */
 
  /**
