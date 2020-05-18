@@ -23,14 +23,14 @@ module.exports = new class CityController {
   }
 
   async updateCity(req, res, next) {
-    const { err, city, status } = await updateCity(req.body,req.params.id);
+    const { err, message, status } = await updateCity(req.body,req.params.id);
     if(err) return next(new ServerError(err, status));
-    res.json({ message: 'success!', data: city });
+    res.json({ message });
   }
 
   async deleteCity(req, res, next) {
-    const { err, city, status } = await deleteCity(req.params.id);
+    const { err, message, status } = await deleteCity(req.params.id);
     if(err) return next(new ServerError(err, status));
-    res.json({ message: 'success!', data: city });
+    res.json({ message });
   }
 }

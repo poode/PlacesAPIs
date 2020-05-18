@@ -1,18 +1,13 @@
 const db = require('../../models');
 
-exports.getById = async id => {
-  try{
-    let number = Integer.parseInt(id);
-     if(number > 999){
-       return "id should be integer "
-     }
-    }catch(error){
-      return "id should be integer "+ error
-    }
+const getById = async id => {
+  const result = parseInt(id);
+  if(result === NaN) return {err: `id should be integer you sent ${id}`, status: 400 };
   const city = await db.city.findOne({ where: { id }, raw: true });
   if(!city) return { err: `City with ID ${id} is not found`, status: 404 };
   return { city };
 }
+exports.getById = getById;
 
 async function getByName(name) {
   const city = await db.city.findOne({ where: { name } });
@@ -31,34 +26,16 @@ exports.createCity = async reqBody => {
   return { createdCity };
 }
 
-exports.updateCity = async(newData,id) => {
-  try{
-    let number = Integer.parseInt(id);
-     if(number > 999){
-       return "id should be integer "
-     }
-    }catch(error){
-      return "id should be integer "+ error
-    }
-  const city = await db.city.update(newData,{where: { id: id }});
-  if(city == 1){
-    return "city was updated successfully.";
-  }
-  return "error city not found";
+exports.updateCity = async (newData, id) => {
+  const {city, err, status} = await getById(id);
+  if(err) return { err, status};
+  await db.city.update(newData,{where: { id }});
+  return { message: 'updated successfully' };
 };
 
 exports.deleteCity = async(id) => {
-  try{
-  let number = Integer.parseInt(id);
-   if(number > 999){
-     return "id should be integer "
-   }
-  }catch(error){
-    return "id should be integer "+ error
-  }
-  const city = await db.city.destroy({where: { id: id }});
-  if(city == 1){
-    return "city was deleted successfully.";
-  }
-  return "error city not found";
+  const {city, err, status} = await getById(id);
+  if(err) return { err, status};
+  await db.city.destroy({where: { id }});
+  return { message: 'city was deleted successfully!'};
 };

@@ -5,11 +5,14 @@ const { IMAGE_MAX_COUNT } = require('../../config/serverConfig');
 const db = require('../../models');
 const { Op } = db.Sequelize;
 
-exports.getById = async id => {
+const getById = async id => {
+  const result = parseInt(id);
+  if(result === NaN) return {err: `id should be integer you sent ${id}`, status: 400 };
   const place = await db.place.findOne({ where: { id }, include: [db.user, db.city], raw: true });
   if(!place) return { err: `Place with ID ${id} is not found`, status: 404 };
   return { place };
 }
+exports.getById = getById;
 
 async function getByName(name) {
   const place = await db.place.findOne({ where: { name }, include: [db.user, db.city], raw: true });
@@ -78,33 +81,15 @@ exports.searchForPlace = async reqQuery => {
 }
 
 exports.updatePlace = async(newData,id) => {
-  try{
-    let number = Integer.parseInt(id);
-     if(number > 999){
-       return "id should be integer "
-     }
-    }catch(error){
-      return "id should be integer "+ error
-    }
-  const note = await db.place.update(newData,{where: { id: id }});
-  if(note == 1){
-    return "place was updated successfully.";
-  }
-  return "error place not found";
+  const { err, status} = await getById(id);
+  if(err) return { err, status};
+  await db.place.update(newData,{where: { id }});
+  return { message: 'place has been updated successfully!'};
 };
 
 exports.deletePlace = async(id) => {
-  try{
-    let number = Integer.parseInt(id);
-     if(number > 999){
-       return "id should be integer "
-     }
-    }catch(error){
-      return "id should be integer "+ error
-    }
-  const place = await db.place.destroy({where: { id: id }});
-  if(place == 1){
-    return "place was deleted successfully.";
-  }
-  return "error  not place found";
+  const { err, status} = await getById(id);
+  if(err) return { err, status};
+  await db.place.destroy({where: { id: id }});
+  return { message: 'place has been deleted successfully!' };
 };

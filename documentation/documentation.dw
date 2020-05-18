@@ -61,7 +61,7 @@
 
  /**
  * @swagger
- * /cities/:id:
+ * /cities/{id}:
  *   get:
  *     tags:
  *       - Cities APIs
@@ -84,7 +84,7 @@
 
  /**
  * @swagger
- * /cities/:id:
+ * /cities/{id}:
  *   put:
  *     tags:
  *       - Cities APIs
@@ -116,7 +116,7 @@
 
 /**
  * @swagger
- * /cities/:id:
+ * /cities/{id}:
  *   delete:
  *     tags:
  *       - Cities APIs
@@ -238,7 +238,7 @@
 
  /**
  * @swagger
- * /places/:id:
+ * /places/{id}:
  *   get:
  *     tags:
  *       - Places APIs
@@ -261,7 +261,7 @@
 
  /**
  * @swagger
- * /places/:id:
+ * /places/{id}:
  *   put:
  *     tags:
  *       - Places APIs
@@ -293,7 +293,7 @@
 
 /**
  * @swagger
- * /places/:id:
+ * /places/{id}:
  *   delete:
  *     tags:
  *       - Places APIs
@@ -312,6 +312,95 @@
  *     responses:
  *       200:
  *         description: Returns  success message
+ */
+
+/**
+ * @swagger
+ * /polls:
+ *   delete:
+ *     tags:
+ *       - Polls APIs
+ *     description: Delete a certain pull by its own id
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: id
+ *         schema:
+ *            type: string
+ *         description: the id of the wanted poll, user must own this poll.
+ *         in: query
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns success message.
+ */
+
+ /**
+ * @swagger
+ * /polls/list:
+ *   get:
+ *     tags:
+ *       - Polls APIs
+ *     description: Any user can get list of polls votes for certain place by its ID
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: placeId
+ *         schema:
+ *            type: string
+ *         description: it is the place id
+ *         in: query
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns found polls for this place
+ */
+
+/**
+ * @swagger
+ * /polls:
+ *   put:
+ *     tags:
+ *       - Polls APIs
+ *     description: User can update his previous created poll
+ *     summary: User can update his previous created poll
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               text:
+ *                  description: poll text to be voted later by users
+ *                  required: true
+ *                  type: string
+ *               placeId:
+ *                  description: place ID we can get from user's places added by him/her, user must own this place.
+ *                  required: true
+ *                  type: number
+ *     responses:
+ *       200:
+ *         description: Returns success message
  */
 
  /**
@@ -351,11 +440,11 @@
 
  /**
  * @swagger
- * /polls:
+ * /polls/{id}:
  *   get:
  *     tags:
  *       - Polls APIs
- *     description: Any user can get votes for certain place by its ID
+ *     description: Any user can get a poll for certain place by its ID
  *     produces:
  *       - application/json
  *     parameters:
@@ -365,15 +454,15 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: placeId
+ *       - name: id
  *         schema:
  *            type: string
- *         description: it is the place id
- *         in: query
+ *         description: it is the poll id
+ *         in: path
  *         required: true
  *     responses:
  *       200:
- *         description: Returns found polls for this place
+ *         description: Returns found polls
  */
 
  /**

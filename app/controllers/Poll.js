@@ -22,7 +22,7 @@ module.exports = new class PollController {
   }
 
   async getPollById(req, res, next) {
-    const { err, poll, status } = await getPollById(req.query.id);
+    const { err, poll, status } = await getPollById(req.params.id);
     if(err) return next(new ServerError(err, status));
     res.json({ message: 'success!', data: poll });
   }

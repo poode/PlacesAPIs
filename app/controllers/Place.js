@@ -25,16 +25,16 @@ module.exports = new class PlaceController {
   }
  
   async updatePlace(req, res, next) {
-    const { err, city, status } = await updatePlace(req.params.id);
+    const { err, message, status } = await updatePlace(req.params.id);
     if(err) return next(new ServerError(err, status));
-    res.json({ message: 'success!', data: city });
+    res.json({ message });
   }
 
    
   async deletePlace(req, res, next) {
-    const { err, city, status } = await deletePlace(req.params.id);
+    const { err, message, status } = await deletePlace(req.params.id);
     if(err) return next(new ServerError(err, status));
-    res.json({ message: 'success!', data: city });
+    res.json({ message });
   }
 
   

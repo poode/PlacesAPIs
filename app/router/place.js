@@ -17,8 +17,8 @@ const { self, addPlace , searchPlace, getPlaceByName,getPlaceById,updatePlace,de
 router.post('/', jwt(), upload.array(IMAGE_FIELD, IMAGE_MAX_COUNT), validate(addPlaceSchema), validateLocation,addPlace.bind(self));
 router.get('/', jwt(), validate(searchPlaceSchema), searchPlace.bind(self));
 router.get('/', jwt(), validate(getPlaceByNameSchema), getPlaceByName.bind(self));
-router.get('/:id', jwt(),getPlaceById.bind(self));
-router.put('/:id', jwt(),updatePlace.bind(self));
+router.get('/:id', jwt(), getPlaceById.bind(self));
+router.put('/:id', jwt(), updatePlace.bind(self));
 router.delete('/:id', jwt(), deletePlace.bind(self));
 
 

@@ -1,10 +1,13 @@
 const db = require('../../models');
 
 const { getUserById } = require('../services/user');
-const { getPlaceById } = require('../services/place');
+const { getById } = require('../services/place');
+
+const getPlaceById = getById;
 
 async function getPollById(id) {
-  if(!id) return { err: `id is needed`, status: 400 };
+  const result = parseInt(id);
+  if(result === NaN) return { err: `id is needed and should be valid number!`, status: 400 };
   const poll = await db.poll.findOne({ where: { id }, raw: true });
   if(!poll) return { err: `Poll with ID ${id} is not found`, status: 404 };
   return { poll };
@@ -67,9 +70,11 @@ exports.updatePoll = async ({ user, body }) => {
   const place = await getPlaceById(poll.placeId);
   if(place.err) return ({ err: place.err, status: place.status });
   if(place.place.userId == user.id || user.role == 'admin'){
-  await db.poll.update({ text: body.text }, { where: { id }});
-  return {  response: 'Poll updated!' };
-  } else return { err: `You do not own such poll`, status: 401 };
+    await db.poll.update({ text: body.text }, { where: { id }});
+    return {  response: 'Poll updated!' };
+  } else {
+    return { err: `You do not own this poll`, status: 401 };
+  }
 }
 
 exports.deletePoll = async ({ user, query }) => {
@@ -79,7 +84,9 @@ exports.deletePoll = async ({ user, query }) => {
   const place = await getPlaceById(poll.placeId);
   if(place.err) return ({ err: place.err, status: place.status });
   if(place.place.userId == user.id || user.role == 'admin'){
-  await db.poll.destroy({ where: { id }});
-  return { response: 'Poll deleted!' };
-  } else return { err: `You do not own such poll`, status: 401 };
+    await db.poll.destroy({ where: { id }});
+    return { response: 'Poll deleted!' };
+  } else {
+    return { err: `You do not own this poll`, status: 401 };
+  }
 } 
