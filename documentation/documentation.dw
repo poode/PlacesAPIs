@@ -30,7 +30,7 @@
 
  /**
  * @swagger
- * /cities/?name:
+ * /cities:
  *   get:
  *     tags:
  *       - Cities APIs
@@ -193,7 +193,7 @@
 
  /**
  * @swagger
- * /albums/?name:
+ * /albums:
  *   get:
  *     tags:
  *       - Albums APIs
