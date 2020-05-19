@@ -11,8 +11,8 @@ const { self, addCity,getCityByName,getCityById,updateCity,deleteCity } = requir
 
 
 router.post('/', jwt(), validate(addCitySchema), addCity.bind(self));
-router.get('/', jwt(), validate(getCityByNameSchema), getCityByName.bind(self));
-router.get('/:id', jwt(), getCityById.bind(self));
+router.get('/', validate(getCityByNameSchema), getCityByName.bind(self));
+router.get('/:id', getCityById.bind(self));
 router.put('/:id', jwt(),updateCity.bind(self));
 router.delete('/:id', jwt(),deleteCity.bind(self));
 

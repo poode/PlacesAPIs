@@ -38,12 +38,6 @@
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: x-auth-token
- *         schema:
- *            type: string
- *         description: Token to sent in any request to identify the logged in User
- *         in: header
- *         required: true
  *       - name: name
  *         in: query
  *         schema:
@@ -69,12 +63,6 @@
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: x-auth-token
- *         schema:
- *            type: string
- *         description: Token to sent in any request to identify the logged in User
- *         in: header
- *         required: true
  *       - name: id
  *         in: path
  *     responses:
@@ -188,16 +176,10 @@
  *   get:
  *     tags:
  *       - Albums APIs
- *     description: Any user can search for an ablum by its name
+ *     description: Any user can search for an album by its name
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: x-auth-token
- *         schema:
- *            type: string
- *         description: Token to sent in any request to identify the logged in User
- *         in: header
- *         required: true
  *       - name: name
  *         schema:
  *            type: string
@@ -219,12 +201,6 @@
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: x-auth-token
- *         schema:
- *            type: string
- *         description: Token to sent in any request to identify the logged in User
- *         in: header
- *         required: true
  *       - name: name
  *         in: query
  *         schema:
@@ -250,12 +226,6 @@
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: x-auth-token
- *         schema:
- *            type: string
- *         description: Token to sent in any request to identify the logged in User
- *         in: header
- *         required: true
  *       - name: id
  *         in: path
  *     responses:
@@ -355,12 +325,6 @@
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: x-auth-token
- *         schema:
- *            type: string
- *         description: Token to sent in any request to identify the logged in User
- *         in: header
- *         required: true
  *       - name: placeId
  *         schema:
  *            type: string
@@ -452,12 +416,6 @@
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: x-auth-token
- *         schema:
- *            type: string
- *         description: Token to sent in any request to identify the logged in User
- *         in: header
- *         required: true
  *       - name: id
  *         schema:
  *            type: string
@@ -715,12 +673,6 @@
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: x-auth-token
- *         schema:
- *            type: string
- *         description: Token to sent in any request to identify the logged in User
- *         in: header
- *         required: true
  *       - name: body
  *         in: body
  *         schema:

@@ -12,12 +12,12 @@ const { searchAlbumSchema } = require('../RequestSchemaList/searchAlbum');
 const { getAlbumByNameSchema } = require('../RequestSchemaList/getAlbumByNameSchema');
 
 
-const { self, addAlbum , searchAlbum, getAlbumByName,getAlbumById,updateAlbum,deleteAlbum} = require('../controllers/Album');
+const { self, addAlbum , searchAlbum, getAlbumByName, getAlbumById, updateAlbum, deleteAlbum} = require('../controllers/Album');
 
 router.post('/', jwt(), upload.array(IMAGE_FIELD, IMAGE_MAX_COUNT), validate(addAlbumSchema), validateLocation,addAlbum.bind(self));
-router.get('/', jwt(), validate(searchAlbumSchema), searchAlbum.bind(self));
-router.get('/', jwt(), validate(getAlbumByNameSchema), getAlbumByName.bind(self));
-router.get('/:id', jwt(), getAlbumById.bind(self));
+router.get('/', validate(searchAlbumSchema), searchAlbum.bind(self));
+router.get('/', validate(getAlbumByNameSchema), getAlbumByName.bind(self));
+router.get('/:id', getAlbumById.bind(self));
 router.put('/:id', jwt(), updateAlbum.bind(self));
 router.delete('/:id', jwt(), deleteAlbum.bind(self));
 
