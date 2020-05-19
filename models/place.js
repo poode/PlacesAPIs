@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     Place.belongsTo(models.city);
     Place.hasMany(models.poll);
     Place.hasMany(models.placeImage);
+    Place.hasMany(models.report);
   };
   return Place;
 };

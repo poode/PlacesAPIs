@@ -13,6 +13,7 @@ const { cityRouter } = require('./router/city');
 const { placeRouter } = require('./router/place');
 const { pollRouter } = require('./router/poll');
 const { voteRouter } = require('./router/vote');
+const { reportRouter } = require('./router/report');
 
 const app = express();
 app.use(passport.initialize());
@@ -33,6 +34,7 @@ app.use('/cities', cityRouter);
 app.use('/places', placeRouter);
 app.use('/polls', pollRouter);
 app.use('/votes', voteRouter);
+app.use('/reports', reportRouter);
 app.get('/swagger.json', (req, res) => {
   res.send(swaggerDocs(req, { url: process.env.SERVER_URL }));
 });
