@@ -1,9 +1,9 @@
 const db = require('../../models');
 
 const { getUserById } = require('../services/user');
-const { getById } = require('../services/place');
+const { getById } = require('./album');
 
-const getPlaceById = getById;
+const getAlbumById = getById;
 
 async function getPollById(id) {
   const result = parseInt(id);
@@ -24,9 +24,9 @@ exports.getVoteByUserIdAndPollId = async ({ userId, pollId }) => {
   return { vote };
 }
 
-async function getVoteCountWithPlaceId (placeId) {
-  const placeVoteList = await db.place.findOne({
-    where: { id: placeId },
+async function getVoteCountWithAlbumId (albumId) {
+  const albumVoteList = await db.album.findOne({
+    where: { id: albumId },
     include: [{
       model: db.poll,
       include:[{
@@ -38,38 +38,38 @@ async function getVoteCountWithPlaceId (placeId) {
       }],
     }],
   });
-  return placeVoteList;
+  return albumVoteList;
 }
 
-exports.getVoteCountWithPlaceId = getVoteCountWithPlaceId;
+exports.getVoteCountWithAlbumId = getVoteCountWithAlbumId;
 
 // @TODO list with votes
-async function getPollListByPlaceId({ placeId }) {
-  const { place, err, status } = await getPlaceById(placeId);
+async function getPollListByAlbumId({ albumId }) {
+  const { album, err, status } = await getAlbumById(albumId);
   if(err) return { err, status };
-  const pollList = await db.poll.findAll({ where: { placeId } });
-  if(!pollList.length) return { err: `There is no poll with placeId ${placeId}`, status: 404 }
-  const pollListWithVotes = await getVoteCountWithPlaceId(placeId);
+  const pollList = await db.poll.findAll({ where: { albumId } });
+  if(!pollList.length) return { err: `There is no poll with albumId ${albumId}`, status: 404 }
+  const pollListWithVotes = await getVoteCountWithAlbumId(albumId);
   return { pollListWithVotes };
 }
-exports.getPollListByPlaceId = getPollListByPlaceId;
+exports.getPollListByAlbumId = getPollListByAlbumId;
 
 exports.createPoll = async ({ user, body }) => {
-  const { place, err, status } = await getPlaceById(body.placeId);
+  const { album, err, status } = await getAlbumById(body.albumId);
   if(err) return { err, status };
-  if(place.userId == user.id || user.role == 'admin'){
+  if(album.userId == user.id || user.role == 'admin'){
   const createdPoll = await db.poll.create(body);
   return { createdPoll };
-  } else return { err: `You do not own a place with id ${body.placeId}`, status: 401 };
+  } else return { err: `You do not own a album with id ${body.albumId}`, status: 401 };
 }
 
 exports.updatePoll = async ({ user, body }) => {
   const id = body.pollId;
   const { poll, err, status } = await getPollById(id);
   if(err) return { err, status };
-  const place = await getPlaceById(poll.placeId);
-  if(place.err) return ({ err: place.err, status: place.status });
-  if(place.place.userId == user.id || user.role == 'admin'){
+  const album = await getAlbumById(poll.albumId);
+  if(album.err) return ({ err: album.err, status: album.status });
+  if(album.album.userId == user.id || user.role == 'admin'){
     await db.poll.update({ text: body.text }, { where: { id }});
     return {  response: 'Poll updated!' };
   } else {
@@ -81,9 +81,9 @@ exports.deletePoll = async ({ user, query }) => {
   const id = query.id;
   const { poll, err, status } = await getPollById(id);
   if(err) return { err, status };
-  const place = await getPlaceById(poll.placeId);
-  if(place.err) return ({ err: place.err, status: place.status });
-  if(place.place.userId == user.id || user.role == 'admin'){
+  const album = await getalbumById(poll.albumId);
+  if(album.err) return ({ err: album.err, status: album.status });
+  if(album.album.userId == user.id || user.role == 'admin'){
     await db.poll.destroy({ where: { id }});
     return { response: 'Poll deleted!' };
   } else {

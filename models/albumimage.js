@@ -1,11 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const PlaceImage = sequelize.define('placeImage', {
-    placeId: { 
+  const AlbumImage = sequelize.define('albumImage', {
+    albumId: { 
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { 
-       model: 'places',
+       model: 'albums',
         key: 'id',
       },
       onUpdate: 'CASCADE',
@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   }, {});
-  PlaceImage.associate = function(models) {
+  AlbumImage.associate = function(models) {
     // associations can be defined here
-    PlaceImage.belongsTo(models.place);
+    AlbumImage.belongsTo(models.album);
   };
-  return PlaceImage;
+  return AlbumImage;
 };

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Place = sequelize.define('place', {
+  const Album = sequelize.define('album', {
     name: { 
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -38,13 +38,13 @@ module.exports = (sequelize, DataTypes) => {
       }
      ]
   });
-  Place.associate = function(models) {
+  Album.associate = function(models) {
     // associations can be defined here
-    Place.belongsTo(models.user);
-    Place.belongsTo(models.city);
-    Place.hasMany(models.poll);
-    Place.hasMany(models.placeImage);
-    Place.hasMany(models.report);
+    Album.belongsTo(models.user);
+    Album.belongsTo(models.city);
+    Album.hasMany(models.poll);
+    Album.hasMany(models.albumImage);
+    Album.hasMany(models.report);
   };
-  return Place;
+  return Album;
 };

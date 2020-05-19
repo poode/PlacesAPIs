@@ -1,4 +1,4 @@
-exports.addPlaceSchema = {
+exports.addAlbumSchema = {
   "type": "object",
   "required": [
     "name",
@@ -9,7 +9,7 @@ exports.addPlaceSchema = {
       "type": "string",
       "minLength": 3,
       "maxLength": 255,
-      "errorMessage": "please send me name of the place!"
+      "errorMessage": "please send me name of the album!"
     },
     "cityId": {
       "type": "string",

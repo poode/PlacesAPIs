@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('places', {
+    return queryInterface.createTable('albums', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -46,9 +46,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    }).then(() => queryInterface.addIndex('places', ['name']));
+    }).then(() => queryInterface.addIndex('albums', ['name']));
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('places');
+    return queryInterface.dropTable('albums');
   }
 };

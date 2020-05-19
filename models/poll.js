@@ -1,11 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Poll = sequelize.define('poll', {
-    placeId: { 
+    albumId: { 
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'places',
+        model: 'albums',
         key: 'id',
       },
       onUpdate: 'CASCADE',
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   Poll.associate = function(models) {
     // console.log(models);
     // associations can be defined here
-    Poll.belongsTo(models.place);
+    Poll.belongsTo(models.album);
     Poll.hasMany(models.vote, {onDelete: 'CASCADE'});
   };
   return Poll;

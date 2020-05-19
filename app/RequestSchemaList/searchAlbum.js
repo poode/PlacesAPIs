@@ -1,4 +1,4 @@
-exports.searchPlaceSchema = {
+exports.searchAlbumSchema = {
   "type": "object",
   "required": [
     "name"
@@ -8,7 +8,7 @@ exports.searchPlaceSchema = {
       "type": "string",
       "minLength": 3,
       "maxLength": 255,
-      "errorMessage": "please send me name of the place!"
+      "errorMessage": "please send me name of the Album!"
     }
   }
 }
