@@ -35,7 +35,7 @@
 
  /**
  * @swagger
- * /reports/place:
+ * /reports/album:
  *   get:
  *     tags:
  *       - Reports APIs

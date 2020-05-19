@@ -3,7 +3,7 @@ require('dotenv').config();
 const serverConfig = {
   PORT: process.env.PORT || 3000,
   IMAGE_FIELD: 'images',
-  IMAGE_MAX_COUNT: 4,
+  IMAGE_MAX_COUNT: process.env.IMAGE_MAX_COUNT,
   IMAGE_STORAGE: 'uploads/images/',
   SWAGGER_BASE_URL: '/public/api-docs',
   IMAGE_SIZE: 1000000,
