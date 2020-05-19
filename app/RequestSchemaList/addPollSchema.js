@@ -2,7 +2,7 @@ exports.addPollSchema = {
   "type": "object",
   "required": [
     "text",
-    "placeId"
+    "albumId"
   ],
   "properties": {
     "text": {
@@ -11,10 +11,10 @@ exports.addPollSchema = {
       "maxLength": 255,
       "errorMessage": "please send me text of the poll item!"
     },
-    "placeId": {
+    "albumId": {
       "type": "number",
       "minimum": 1,
-      "errorMessage": "please send me placeId of the poll item!"
+      "errorMessage": "please send me albumId of the poll item!"
     }
   }
 }

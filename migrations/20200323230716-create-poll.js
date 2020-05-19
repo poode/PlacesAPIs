@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      placeId: {
+      albumId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'places',
+          model: 'albums',
           key: 'id',
         },
         onUpdate: 'CASCADE',

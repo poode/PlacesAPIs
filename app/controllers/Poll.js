@@ -1,6 +1,6 @@
 const {
    createPoll, 
-   getPollListByPlaceId, 
+   getPollListByAlbumId, 
    getPollById,
    updatePoll,
    deletePoll
@@ -16,7 +16,7 @@ module.exports = new class PollController {
   }
 
   async getPollList(req, res, next) {
-    const { err, pollListWithVotes, status } = await getPollListByPlaceId(req.query);
+    const { err, pollListWithVotes, status } = await getPollListByAlbumId(req.query);
     if(err) return next(new ServerError(err, status));
     res.json({ message: 'success!', data: pollListWithVotes });
   }

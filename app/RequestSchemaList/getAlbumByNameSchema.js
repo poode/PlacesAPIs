@@ -1,4 +1,4 @@
-exports.getPlaceByNameSchema = {
+exports.getAlbumByNameSchema = {
   "type": "object",
   "required": [
     "name"

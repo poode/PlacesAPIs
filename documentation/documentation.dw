@@ -75,20 +75,21 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: param
- *         in: param
+ *       - name: id
+ *         in: path
  *     responses:
  *       200:
  *         description: Returns  City info
  */
 
+
  /**
  * @swagger
- * /cities/{id}:
+ * /places/{id}:
  *   put:
  *     tags:
- *       - Cities APIs
- *     description: Any user can get update info using city id.
+ *       - Places APIs
+ *     description: Any user can get update place info using place id.
  *     produces:
  *       - application/json
  *     parameters:
@@ -221,7 +222,7 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: query
+ *       - name: name
  *         in: query
  *         schema:
  *            type: object

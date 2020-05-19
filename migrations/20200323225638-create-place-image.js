@@ -1,18 +1,18 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('placeImages', {
+    return queryInterface.createTable('albumImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      placeId: {
+      albumId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'places',
+          model: 'albums',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -33,6 +33,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('placeImages');
+    return queryInterface.dropTable('albumImages');
   }
 };

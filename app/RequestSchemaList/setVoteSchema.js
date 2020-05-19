@@ -1,19 +1,19 @@
 exports.setVoteSchema = {
     "type": "object",
     "required": [
-      "placeId",
+      "albumId",
       "pollId"
     ],
     "properties": {
-      "placeId": {
+      "albumId": {
         "type": "number",
         "minimum": 1,
-        "errorMessage": "please send me placeId"
+        "errorMessage": "please send me albumId"
       },
       "pollId": {
         "type": "number",
         "minimum": 1,
-        "errorMessage": "please send me placeId"
+        "errorMessage": "please send me albumId"
       }
     }
   }

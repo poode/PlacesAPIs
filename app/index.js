@@ -10,7 +10,7 @@ const { swaggerDocs } = require('./util');
 
 const { userRouter } = require('./router/user');
 const { cityRouter } = require('./router/city');
-const { placeRouter } = require('./router/place');
+const { albumRouter } = require('./router/album');
 const { pollRouter } = require('./router/poll');
 const { voteRouter } = require('./router/vote');
 
@@ -30,7 +30,7 @@ app.get('/healthcheck', (req, res, next) => {
 
 app.use('/users', userRouter);
 app.use('/cities', cityRouter);
-app.use('/places', placeRouter);
+app.use('/albums', albumRouter);
 app.use('/polls', pollRouter);
 app.use('/votes', voteRouter);
 app.get('/swagger.json', (req, res) => {
