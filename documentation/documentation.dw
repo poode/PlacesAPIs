@@ -44,7 +44,7 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: query
+ *       - name: name
  *         in: query
  *         schema:
  *            type: object
@@ -85,10 +85,10 @@
 
  /**
  * @swagger
- * /places/{id}:
+ * /cities/{id}:
  *   put:
  *     tags:
- *       - Places APIs
+ *       - Cities APIs
  *     description: Any user can get update place info using place id.
  *     produces:
  *       - application/json
@@ -99,8 +99,8 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: param
- *         in: param
+ *       - name: id
+ *         in: path
  *       - name: body
  *         in: body
  *         schema:
@@ -140,11 +140,11 @@
 
  /**
  * @swagger
- * /places:
+ * /albums:
  *   post:
  *     tags:
- *       - Places APIs
- *     description: Any user can add place in a city
+ *       - Albums APIs
+ *     description: Any user can add albun in a city
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -180,12 +180,15 @@
  */
 
  /**
+
+
+
  * @swagger
- * /places:
+ * /albums:
  *   get:
  *     tags:
- *       - Places APIs
- *     description: Any user can search for a place by its name
+ *       - Albums APIs
+ *     description: Any user can search for an ablum by its name
  *     produces:
  *       - application/json
  *     parameters:
@@ -208,11 +211,11 @@
 
  /**
  * @swagger
- * /places/?name:
+ * /albums/?name:
  *   get:
  *     tags:
- *       - Places APIs
- *     description: Any user can get place info using place name.
+ *       - Albums APIs
+ *     description: Any user can get album info using album name.
  *     produces:
  *       - application/json
  *     parameters:
@@ -228,7 +231,7 @@
  *            type: object
  *            properties:
  *               name:
- *                  description: Place name
+ *                  description: Album name
  *                  required: true
  *                  type: string
  *     responses:
@@ -239,11 +242,11 @@
 
  /**
  * @swagger
- * /places/{id}:
+ * /albums/{id}:
  *   get:
  *     tags:
- *       - Places APIs
- *     description: Any user can get place info using place name.
+ *       - Albums APIs
+ *     description: Any user can get album info using album id.
  *     produces:
  *       - application/json
  *     parameters:
@@ -253,8 +256,8 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: param
- *         in: param
+ *       - name: id
+ *         in: path
  *     responses:
  *       200:
  *         description: Returns  place info
@@ -262,11 +265,11 @@
 
  /**
  * @swagger
- * /places/{id}:
+ * /albums/{id}:
  *   put:
  *     tags:
- *       - Places APIs
- *     description: Any user can get update place info using place id.
+ *       - Albums APIs
+ *     description: Any user can get update album info using album id.
  *     produces:
  *       - application/json
  *     parameters:
@@ -276,8 +279,8 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: param
- *         in: param
+ *       - name: id
+ *         in: path
  *       - name: body
  *         in: body
  *         schema:
@@ -294,11 +297,11 @@
 
 /**
  * @swagger
- * /places/{id}:
+ * /albums/{id}:
  *   delete:
  *     tags:
- *       - Places APIs
- *     description: Any user can delete any place using place ID.
+ *       - Albums APIs
+ *     description: Any user can delete any album using album ID.
  *     produces:
  *       - application/json
  *     parameters:
@@ -308,8 +311,8 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: param
- *         in: param
+ *       - name: id
+ *         in: path
  *     responses:
  *       200:
  *         description: Returns  success message
