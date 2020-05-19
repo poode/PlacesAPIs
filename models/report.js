@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   Report.associate = function(models) {
     // associations can be defined here
     Report.belongsTo(models.user);
-    Report.belongsTo(models.place);
+    Report.belongsTo(models.album);
   };
   return Report;
 };

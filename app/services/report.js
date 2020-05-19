@@ -1,6 +1,6 @@
 const db = require('../../models');
 
-const { getById } = require('../services/place');
+const { getById } = require('../services/album');
 const getPlaceById = getById;
 
 async function getReportById(id) {
