@@ -1,7 +1,7 @@
 const db = require('../../models');
 
 const { getById } = require('../services/album');
-const getPlaceById = getById;
+const getAlbumById = getById;
 
 async function getReportById(id) {
   const result = parseInt(id);
@@ -13,15 +13,15 @@ async function getReportById(id) {
 
 exports.getReportById = getReportById;
 
-exports.getReportsByplaceId = async ({ placeId }) => {
-  const placeFound = await getPlaceById(placeId);
-  if(placeFound.err) return { err: placeFound.err, status: placeFound.status };
-  const reports = await db.report.findAll({ where: { placeId }, raw: true });
+exports.getReportsByAlbumId = async ({ albumId }) => {
+  const albumFound = await getAlbumById(albumId);
+  if(albumFound.err) return { err: albumFound.err, status: albumFound.status };
+  const reports = await db.report.findOne({ where: { albumId }, raw: true });
   return { reports };
 }
 
 exports.addReport = async ({ user, body }) => {
-  const { place, err, status } = await getPlaceById(body.placeId);
+  const { place, err, status } = await getAlbumById(body.albumId);
   if(err) return { err, status };
   body.userId = user.id;
   const createdReport = await db.report.create(body);

@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
      },
-    placeId: { 
+    albumId: { 
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'places',
+        model: 'albums',
         key: 'id',
       },
       onUpdate: 'CASCADE',

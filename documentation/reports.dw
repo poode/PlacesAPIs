@@ -24,8 +24,8 @@
  *                  description: report text to be send to the platform
  *                  required: true
  *                  type: string
- *               placeId:
- *                  description: place ID that the user wants to report
+ *               albumId:
+ *                  description: album ID that the user wants to report
  *                  required: true
  *                  type: number
  *     responses:
@@ -39,19 +39,19 @@
  *   get:
  *     tags:
  *       - Reports APIs
- *     description: Any user can get list of reports for certain place by its ID
+ *     description: Any user can get list of reports for certain album by its ID
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: placeId
+ *       - name: albumId
  *         schema:
  *            type: string
- *         description: it is the place id
+ *         description: it is the album id
  *         in: query
  *         required: true
  *     responses:
  *       200:
- *         description: Returns found reports for this place
+ *         description: Returns found reports for this album
  */
 
  /**

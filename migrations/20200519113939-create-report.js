@@ -18,7 +18,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      placeId: {
+      albumId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

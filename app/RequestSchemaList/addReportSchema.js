@@ -2,7 +2,7 @@ exports.addReportSchema = {
     "type": "object",
     "required": [
       "issue",
-      "placeId"
+      "albumId"
     ],
     "properties": {
       "issue": {
@@ -11,10 +11,10 @@ exports.addReportSchema = {
         "maxLength": 255,
         "errorMessage": "issue is missing!"
       },
-      "placeId": {
+      "albumId": {
         "type": "number",
         "minimum": 1,
-        "errorMessage": "please send me placeId of the poll item!"
+        "errorMessage": "please send me albumId!"
       }
     }
   }

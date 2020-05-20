@@ -1,6 +1,6 @@
 const {
     addReport, 
-    getReportsByplaceId, 
+    getReportsByAlbumId, 
     getReportById,
    } = require('../services/report');
  const { ServerError } = require('../../config/serverConfig');
@@ -13,8 +13,8 @@ const {
      res.json({ message: 'success!', data: createdReport });
    }
  
-   async getReportsByplaceId(req, res, next) {
-     const { err, reports, status } = await getReportsByplaceId(req.query);
+   async getReportsByAlbumId(req, res, next) {
+     const { err, reports, status } = await getReportsByAlbumId(req.query);
      if(err) return next(new ServerError(err, status));
      res.json({ message: 'success!', data: reports });
    }
@@ -25,4 +25,3 @@ const {
      res.json({ message: 'success!', data: report });
    }
 }
- 

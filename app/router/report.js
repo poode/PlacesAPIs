@@ -5,10 +5,10 @@ const { validate } = require('../middelwares/validator');
 
 const { addReportSchema } = require('../RequestSchemaList/addReportSchema');
 
-const { self, addReport, getReportsByplaceId, getReportById } = require('../controllers/Report');
+const { self, addReport, getReportsByAlbumId, getReportById } = require('../controllers/Report');
 
 router.post('/', jwt(), validate(addReportSchema), addReport.bind(self));
-router.get('/album', getReportsByplaceId.bind(self));
+router.get('/album', getReportsByAlbumId.bind(self));
 router.get('/:id', getReportById.bind(self));
 
 exports.reportRouter = router;
