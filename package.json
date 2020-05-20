@@ -13,7 +13,8 @@
     "db:seed:undo": "sequelize db:seed:undo",
     "db:seed:undo:all": "sequelize db:seed:undo:all",
     "db:create": "sequelize db:create",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm run db:create && npm run db:migrate && npm run db:seed:all"
   },
   "keywords": [],
   "author": "",
