@@ -146,7 +146,7 @@
  *         name: images
  *         description: The file to upload.
  *         type: file
- *         required: true
+ *         required: false
  *       - in: formData
  *         name: name
  *         description: Place name

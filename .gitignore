@@ -4,6 +4,6 @@ node_modules
 .history
 .vscode
 uploads/images/*.jpeg
-uploads/images/*.jpg
+#uploads/images/*.jpg
 uploads/images/*.gif
 uploads/images/*.png

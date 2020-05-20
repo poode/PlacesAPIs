@@ -8,7 +8,7 @@ const { Op } = db.Sequelize;
 const getById = async id => {
   const result = parseInt(id);
   if(result === NaN) return {err: `id should be integer you sent ${id}`, status: 400 };
-  const album = await db.album.findOne({ where: { id }, include: [db.user, db.city, { model: db.poll, include: [db.vote]}] });
+  const album = await db.album.findOne({ where: { id }, include: [db.user, db.city, db.albumImage, { model: db.poll, include: [db.vote]}] });
   if(!album) return { err: `album with ID ${id} is not found`, status: 404 };
   const albumJSON = album.toJSON();
   delete albumJSON.user.password;
@@ -17,7 +17,7 @@ const getById = async id => {
 exports.getById = getById;
 
 async function getByName(name) {
-  const album = await db.album.findOne({ where: { name }, include: [db.user, db.city], raw: true });
+  const album = await db.album.findOne({ where: { name }, include: [db.user, db.city, db.albumImage, { model: db.poll, include: [db.vote]}], raw: true });
   if(!album) return { err: `There is no album with name ${name}`, status: 404 }
   return { album }
 }
@@ -47,7 +47,9 @@ exports.createAlbum = async (req, userId) => {
     };
   }
 
-  if(!req.files.length) return { err: `The album must have ${IMAGE_MAX_COUNT} images by max you sent ${req.files.length} files!`, status: 400}
+  if(!req.files.length) {
+    req.files = [{ path: 'uploads/images/default.jpg' }]
+  }
 
   try {
     const createdAlbum = await db.album.create({...req.body, userId}, { raw: true });
@@ -76,7 +78,9 @@ exports.searchForAlbum = async reqQuery => {
         model: db.albumImage,
         attributes: ['imageUrl']
       },
-      db.city],
+      db.city,
+      { model: db.poll, include: [db.vote]}
+    ],
   });
   return albumList;
 }
@@ -100,15 +104,23 @@ exports.deleteAlbum = async(id) => {
 exports.deleteImage = async(id) => {
   const image = await db.albumImage.findOne({ where: { id } });
   if(!image) return { err: `Image with id ${id} is not found`, status: 404 };
-  await db.albumImage.destroy({ where: { id } });
-  return { message: 'image has been deleted successfully!' };
+  if(!image.toJSON().imageUrl.includes('default.jpg')) {
+    await db.albumImage.destroy({ where: { id } });
+    await fs.unlink(path.resolve(image.toJSON().imageUrl.split('http://localhost:3000/')[1]));
+    return { message: 'image has been deleted successfully!' };
+  }
+  return { message: 'unable to delete default image please add new image to delete it' };
 }
 
 exports.addNewImages = async ({files, params}) => {
   const { albumId } = params;
-  const { err, status} = await getById(albumId);
+  const { err, status, album} = await getById(albumId);
   if(err) return { err, status };
-  if(!files.length) return { err: `The album must have ${IMAGE_MAX_COUNT} images by max you sent ${files.length} files!`, status: 400 }
+  if(!files.length) return { err: `The album must have ${IMAGE_MAX_COUNT} images by max you sent ${files.length} files!`, status: 400 };
+  if(album.albumImages[0].imageUrl.includes('default.jpg')) {
+    const { id } = album.albumImages[0];
+    await db.albumImage.destroy({ where: { id }});
+  }
   const images = await Promise.all(files.map(async ({ path }) => {
     return db.albumImage
       .create({ albumId, imageUrl: `${JSON.parse(process.env.SSL) ? 'https' : 'http'}://${process.env.SERVER_URL}/${path}` });
@@ -124,7 +136,7 @@ exports.listAlbum = async ({ query }) => {
     order: [
       ['id', 'DESC'],
     ],
-    include: [db.user, db.city, { model: db.poll, include: [db.vote]}]
+    include: [db.user, db.city, db.albumImage,{ model: db.poll, include: [db.vote]}]
   });
   const newRows = list.rows.map(album => {
     const albumRef = album.toJSON();
