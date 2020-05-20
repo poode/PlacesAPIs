@@ -132,7 +132,7 @@
  *   post:
  *     tags:
  *       - Albums APIs
- *     description: Any user can add albun in a city
+ *     description: Any user can add album in a city
  *     consumes:
  *       - multipart/form-data
  *     parameters:
@@ -159,7 +159,7 @@
  *         required: true
  *       - in: formData
  *         name: location
- *         description: location of the place and should be valid stringified object eg":" {lat":" 30, long":" 29}
+ *         description: location of the place and should be valid stringified object eg":" {"lat":" 30, "long":" 29}
  *         type: string
  *         required: true
  *     responses:
@@ -168,9 +168,6 @@
  */
 
  /**
-
-
-
  * @swagger
  * /albums:
  *   get:
@@ -257,9 +254,24 @@
  *            type: object
  *            properties:
  *               name:
- *                  description: Send the key of the data you need to update
+ *                  description: place name to be updated
  *                  required: true
  *                  type: string
+ *               cityId:
+ *                  description: cityId to be updated
+ *                  required: true
+ *                  type: number
+ *               location:
+ *                  description: location of the place to be updated 
+ *                  required: true
+ *                  type: object
+ *                  properties:
+*                      lat:
+*                         type: number
+*                         required: true
+*                      long:
+*                         type: number
+*                         required: true
  *     responses:
  *       200:
  *         description: Returns  success message
@@ -362,8 +374,8 @@
  *                  description: poll text to be voted later by users
  *                  required: true
  *                  type: string
- *               placeId:
- *                  description: place ID we can get from user's places added by him/her, user must own this place.
+ *               albumId:
+ *                  description: album ID we can get from user's albums added by him/her, user must own this place.
  *                  required: true
  *                  type: number
  *     responses:
@@ -397,8 +409,8 @@
  *                  description: poll text to be voted later by users
  *                  required: true
  *                  type: string
- *               placeId:
- *                  description: place ID we can get from user's places added by him/her
+ *               albumId:
+ *                  description: album ID we can get from user's albums added by him/her
  *                  required: true
  *                  type: number
  *     responses:
@@ -666,20 +678,26 @@
  /**
  * @swagger
  * /votes:
- *   get:
+ *   post:
  *     tags:
  *       - Vote Polls APIs
  *     description: Any user can vote for certain poll by its ID and place ID
  *     produces:
  *       - application/json
  *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
  *       - name: body
  *         in: body
  *         schema:
  *            type: object
  *            properties:
- *               placeId:
- *                  description: place Id
+ *               albumId:
+ *                  description: album Id
  *                  required: true
  *                  type: number
  *               pollId:
@@ -689,4 +707,83 @@
  *     responses:
  *       200:
  *         description: Returns vote for this poll
+ */
+
+/**
+ * @swagger
+ * /albums/images/{id}:
+ *   delete:
+ *     tags:
+ *       - Albums APIs
+ *     description: Any user can delete any image in an album using image ID.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: id
+ *         in: path
+ *     responses:
+ *       200:
+ *         description: Returns success message
+ */
+
+/**
+ * @swagger
+ * /albums/{albumId}/images:
+ *   put:
+ *     tags:
+ *       - Albums APIs
+ *     description: Any user can add images to an album
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - in: formData
+ *         name: images
+ *         description: The file to upload.
+ *         type: file
+ *         required: true
+ *       - name: albumId
+ *         description: The album Id.
+ *         in: path
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns new images
+ */
+
+ /**
+ * @swagger
+ * /albums/all/list:
+ *   get:
+ *     tags:
+ *       - Albums APIs
+ *     description: Any user can get album list
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         description: The page Number.
+ *         type: string
+ *         required: true
+ *       - name: limit
+ *         description: number of items per page.
+ *         in: query
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Returns new images
  */

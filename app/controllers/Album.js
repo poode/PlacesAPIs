@@ -1,4 +1,14 @@
-const { createAlbum, searchForAlbum,getByName,getById,updateAlbum,deleteAlbum } = require('../services/album');
+const {
+  createAlbum,
+  searchForAlbum,
+  getByName,
+  getById,
+  updateAlbum,
+  deleteAlbum,
+  deleteImage,
+  addNewImages,
+  listAlbum,
+} = require('../services/album');
 const { ServerError } = require('../../config/serverConfig');
 
 module.exports = new class AlbumController {
@@ -25,9 +35,9 @@ module.exports = new class AlbumController {
   }
  
   async updateAlbum(req, res, next) {
-    const { err, message, status } = await updateAlbum(req.body,req.params.id);
+    const { err, message, data, status } = await updateAlbum(req.body,req.params.id);
     if(err) return next(new ServerError(err, status));
-    res.json({ message });
+    res.json({ message, data });
   }
 
    
@@ -37,5 +47,19 @@ module.exports = new class AlbumController {
     res.json({ message });
   }
 
+  async deleteImageFromAlbum (req, res, next) {
+    const { message, err, status } = await deleteImage(req.params.id)
+    if(err) return next(new ServerError(err, status));
+    res.json({ message });
+  }
+
+  async addNewImageForAlbum (req, res, next) {
+    const { images, err, status } = await addNewImages(req)
+    if(err) return next(new ServerError(err, status));
+    res.json({ message: 'success!', data: images });
+  }
   
+  async allAlbums (req, res ,next) {
+    res.json(await listAlbum(req));
+  }
 }

@@ -5,7 +5,7 @@ require('ajv-errors')(ajv /*, {singleError: true} */);
 
 const validate = schema => {
   return (req, res, next) => {
-    const requestPayload = req.method === 'POST' ? req.body : req.method === 'GET' ? req.query : {};
+    const requestPayload = (req.method === 'POST' || req.method === 'PUT') ? req.body : req.method === 'GET' ? req.query : {};
     const validate = ajv.compile(schema);
     const valid = validate(requestPayload);
     if (valid) {

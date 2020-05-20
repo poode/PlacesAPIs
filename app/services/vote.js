@@ -1,14 +1,14 @@
 const db = require('../../models');
 
 const { getUserById } = require('../services/user');
-const { getAlbumById } = require('./album');
+const { getById } = require('./album');
 const { getVoteByUserIdAndPollId } = require('../services/poll');
 
 
 async function getVoteByAlbumIdAndUserId({ userId, albumId }) {
   const userFound = await getUserById(userId);
   if(userFound.err) return { err: userFound.err, status: userFound.status };
-  const albumFound = await getAlbumById(albumId);
+  const albumFound = await getById(albumId);
   if(albumFound.err) return { err: albumFound.err, status: albumFound.status };
 
   const poll = await db.vote.findOne({
