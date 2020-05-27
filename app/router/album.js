@@ -35,7 +35,7 @@ router.get('/all/list', validate(listAlbumsSchema), allAlbums.bind(self));
 router.put('/:id', jwt(), validate(updateAlbumSchema), updateAlbum.bind(self));
 router.delete('/:id', jwt(), deleteAlbum.bind(self));
 router.delete('/images/:id', jwt(), deleteImageFromAlbum.bind(self));
-router.put('/:albumId/images', jwt(), upload.array(IMAGE_FIELD, IMAGE_MAX_COUNT), addNewImageForAlbum.bind(self));
+router.post('/:albumId/images', jwt(), upload.array(IMAGE_FIELD, IMAGE_MAX_COUNT), addNewImageForAlbum.bind(self));
 
 
 exports.albumRouter = router;

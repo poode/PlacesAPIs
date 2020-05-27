@@ -735,10 +735,11 @@
 /**
  * @swagger
  * /albums/{albumId}/images:
- *   put:
+ *   post:
  *     tags:
  *       - Albums APIs
  *     description: Any user can add images to an album
+ *     summary: Any user can add images to an album
  *     consumes:
  *       - multipart/form-data
  *     parameters:
