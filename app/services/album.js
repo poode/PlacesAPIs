@@ -132,7 +132,8 @@ exports.listAlbum = async ({ query }) => {
   const page = parseInt(query.page);
   const limit = parseInt(query.limit);
   const list = await db.album.findAndCountAll({
-    offset: limit * (page - 1), limit,
+    offset: limit * (page - 1), 
+    limit,
     order: [
       ['id', 'DESC'],
     ],

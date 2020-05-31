@@ -81,7 +81,7 @@ exports.deletePoll = async ({ user, query }) => {
   const id = query.id;
   const { poll, err, status } = await getPollById(id);
   if(err) return { err, status };
-  const album = await getalbumById(poll.albumId);
+  const album = await getAlbumById(poll.albumId);
   if(album.err) return ({ err: album.err, status: album.status });
   if(album.album.userId == user.id || user.role == 'admin'){
     await db.poll.destroy({ where: { id }});

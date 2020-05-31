@@ -77,7 +77,7 @@
  *   put:
  *     tags:
  *       - Cities APIs
- *     description: Any user can get update place info using place id.
+ *     description: Any user can get update album info using album id.
  *     produces:
  *       - application/json
  *     parameters:
@@ -119,8 +119,8 @@
  *         description: Token to sent in any request to identify the logged in User
  *         in: header
  *         required: true
- *       - name: param
- *         in: param
+ *       - name: id
+ *         in: path
  *     responses:
  *       200:
  *         description: Returns  success message
@@ -149,7 +149,7 @@
  *         required: false
  *       - in: formData
  *         name: name
- *         description: Place name
+ *         description: album name
  *         type: string
  *         required: true
  *       - in: formData
@@ -159,7 +159,7 @@
  *         required: true
  *       - in: formData
  *         name: location
- *         description: location of the place and should be valid stringified object eg":" {"lat":" 30, "long":" 29}
+ *         description: location of the album and should be valid stringified object eg":" {"lat":" 30, "long":" 29}
  *         type: string
  *         required: true
  *     responses:
@@ -180,12 +180,12 @@
  *       - name: name
  *         schema:
  *            type: string
- *         description: it is the place name
+ *         description: it is the album name
  *         in: query
  *         required: true
  *     responses:
  *       200:
- *         description: Returns found places
+ *         description: Returns found albums
  */
 
  /**
@@ -209,7 +209,7 @@
  *                  type: string
  *     responses:
  *       200:
- *         description: Returns  places info
+ *         description: Returns  albums info
  */
 
 
@@ -227,7 +227,7 @@
  *         in: path
  *     responses:
  *       200:
- *         description: Returns  place info
+ *         description: Returns  album info
  */
 
  /**
@@ -254,7 +254,7 @@
  *            type: object
  *            properties:
  *               name:
- *                  description: place name to be updated
+ *                  description: album name to be updated
  *                  required: true
  *                  type: string
  *               cityId:
@@ -262,7 +262,7 @@
  *                  required: true
  *                  type: number
  *               location:
- *                  description: location of the place to be updated 
+ *                  description: location of the album to be updated 
  *                  required: true
  *                  type: object
  *                  properties:
@@ -333,19 +333,19 @@
  *   get:
  *     tags:
  *       - Polls APIs
- *     description: Any user can get list of polls votes for certain place by its ID
+ *     description: Any user can get list of polls votes for certain album by its ID
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: placeId
+ *       - name: albumId
  *         schema:
  *            type: string
- *         description: it is the place id
+ *         description: it is the album id
  *         in: query
  *         required: true
  *     responses:
  *       200:
- *         description: Returns found polls for this place
+ *         description: Returns found polls for this album
  */
 
 /**
@@ -375,7 +375,7 @@
  *                  required: true
  *                  type: string
  *               albumId:
- *                  description: album ID we can get from user's albums added by him/her, user must own this place.
+ *                  description: album ID we can get from user's albums added by him/her, user must own this album.
  *                  required: true
  *                  type: number
  *     responses:
@@ -389,8 +389,8 @@
  *   post:
  *     tags:
  *       - Polls APIs
- *     description: User can add poll for a certain place
- *     summary: User can add poll for a certain place
+ *     description: User can add poll for a certain album
+ *     summary: User can add poll for a certain album
  *     produces:
  *       - application/json
  *     parameters:
@@ -424,7 +424,7 @@
  *   get:
  *     tags:
  *       - Polls APIs
- *     description: Any user can get a poll for certain place by its ID
+ *     description: Any user can get a poll for certain album by its ID
  *     produces:
  *       - application/json
  *     parameters:
@@ -681,7 +681,7 @@
  *   post:
  *     tags:
  *       - Vote Polls APIs
- *     description: Any user can vote for certain poll by its ID and place ID
+ *     description: Any user can vote for certain poll by its ID and album ID
  *     produces:
  *       - application/json
  *     parameters:

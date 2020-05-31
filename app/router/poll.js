@@ -9,7 +9,7 @@ const { self, addPoll, getPollList, getPollById, updatePoll, deletePoll } = requ
 
 router.post('/', jwt(), validate(addPollSchema), addPoll.bind(self));
 router.put('/', jwt(), validate(updatePollSchema), updatePoll.bind(self));
-router.get('/list', getPollList.bind(self));
+router.get('/list',validate(getPollListSchema) ,getPollList.bind(self));
 router.get('/:id', getPollById.bind(self));
 router.delete('/', jwt(), deletePoll.bind(self));
 

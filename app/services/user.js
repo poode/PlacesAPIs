@@ -48,12 +48,12 @@ exports.registerUser = async reqBody => {
 
   const duplicated = await getUserByUsername(reqBody.username);
   if (duplicated.err) {
-    return { err, status };
+    return { err: duplicated.err, status: duplicated.status };
   }
 
   reqBody.password = await hashPassword(reqBody.password);
   const createdUser = await db.user.create(reqBody);
-  console.log(createdUser.dataValues)
+
   delete createdUser.dataValues.password;
   return { createdUser };
 }

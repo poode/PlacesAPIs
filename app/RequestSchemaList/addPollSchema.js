@@ -7,8 +7,8 @@ exports.addPollSchema = {
   "properties": {
     "text": {
       "type": "string",
-      "minLength": 10,
-      "maxLength": 255,
+      "minLength": 25,
+      "maxLength": 25,
       "errorMessage": "please send me text of the poll item!"
     },
     "albumId": {
@@ -18,6 +18,22 @@ exports.addPollSchema = {
     }
   }
 }
+
+exports.getPollListSchema = {
+  "type": "object",
+  "required": [
+    "albumId"
+  ],
+  "properties": {
+    "albumId": {
+        "type": "string",
+        "pattern": "^[1-9]\\d*$",
+        "errorMessage": "please send me name of the albumId!"
+      }
+  }
+}
+
+
 
 exports.updatePollSchema = {
   "type": "object",
