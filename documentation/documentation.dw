@@ -52,6 +52,20 @@
  *         description: Returns  City info
  */
 
+ /**
+ * @swagger
+ * /cities/all/list:
+ *   get:
+ *     tags:
+ *       - Cities APIs
+ *     description: Any user can get city list.
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Returns  City List
+ */
+
 
  /**
  * @swagger

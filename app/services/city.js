@@ -39,3 +39,8 @@ exports.deleteCity = async(id) => {
   await db.city.destroy({where: { id }});
   return { message: 'city was deleted successfully!'};
 };
+
+exports.getAllCity = async () => {
+  const cityList = await db.city.findAll();
+  return { cityList };
+}
