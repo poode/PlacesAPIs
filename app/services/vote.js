@@ -4,6 +4,13 @@ const { getUserById } = require('../services/user');
 const { getById } = require('./album');
 const { getVoteByUserIdAndPollId } = require('../services/poll');
 
+const getVoteById = async (id, userId) => {
+  if(!parseInt(id) || !Number(id)) return { err: `id should be an integer and greater than 1, you sent ${id}`, status: 400 };
+  const vote = await db.vote.findOne({ where: { id, userId }, raw: true });
+  if(!vote) return { err: `Vote with ID ${id} is not found`, status: 404 };
+  return { vote };
+}
+exports.getVoteById = getVoteById;
 
 async function getVoteByAlbumIdAndUserId({ userId, albumId }) {
   const userFound = await getUserById(userId);
@@ -38,4 +45,11 @@ exports.setVote = async ({ userId, pollId, albumId }) => {
 
   const createdVote = await db.vote.create({ userId, pollId });
   return { createdVote };
+}
+
+exports.deleteVote = async ({ user, body }) => {
+  const { err, status } = await getVoteById(body.voteId, user.id);
+  if(err) return { err, status };
+  await db.vote.destroy({ where: { id: body.voteId }});
+  return { message: 'success' };
 }

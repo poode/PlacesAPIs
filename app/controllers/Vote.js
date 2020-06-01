@@ -1,4 +1,4 @@
-const { setVote } = require('../services/vote');
+const { setVote, deleteVote } = require('../services/vote');
 const { ServerError } = require('../../config/serverConfig');
 
 module.exports = new class VoteController {
@@ -8,6 +8,12 @@ module.exports = new class VoteController {
     const { err, createdVote, status } = await setVote({ userId: req.user.id, albumId, pollId });
     if(err) return next(new ServerError(err, status));
     res.json({ message: 'success!', data: createdVote });
+  }
+
+  async unsetVote(req, res, next) {
+    const { err, message, status } = await deleteVote(req);
+    if(err) return next(new ServerError(err, status));
+    res.json({ message });
   }
 
 }

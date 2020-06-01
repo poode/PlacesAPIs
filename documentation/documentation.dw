@@ -723,6 +723,36 @@
  *         description: Returns vote for this poll
  */
 
+ /**
+ * @swagger
+ * /votes:
+ *   delete:
+ *     tags:
+ *       - Vote Polls APIs
+ *     description: Any user can delete his vote by its ID
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: x-auth-token
+ *         schema:
+ *            type: string
+ *         description: Token to sent in any request to identify the logged in User
+ *         in: header
+ *         required: true
+ *       - name: body
+ *         in: body
+ *         schema:
+ *            type: object
+ *            properties:
+ *               voteId:
+ *                  description: vote Id
+ *                  required: true
+ *                  type: number
+ *     responses:
+ *       200:
+ *         description: Returns success message
+ */
+
 /**
  * @swagger
  * /albums/images/{id}:
