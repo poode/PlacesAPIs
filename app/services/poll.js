@@ -68,14 +68,14 @@ exports.updatePoll = async ({ user, body }) => {
   const id = body.pollId;
   const { poll, err, status } = await getPollById(id);
   if(err) return { err, status };
-  const album = await getAlbumById(poll.albumId);
-  if(album.err) return ({ err: album.err, status: album.status });
-  if(album.album.userId == user.id || user.role == 'admin'){
+  // const album = await getAlbumById(poll.albumId);
+  // if(album.err) return ({ err: album.err, status: album.status });
+  // if(album.album.userId == user.id || user.role == 'admin'){
     await db.poll.update({ text: body.text }, { where: { id }});
     return {  response: 'Poll updated!' };
-  } else {
-    return { err: `You do not own this poll`, status: 401 };
-  }
+  // } else {
+  //   return { err: `You do not own this poll`, status: 401 };
+  // }
 }
 
 exports.deletePoll = async ({ user, query }) => {
