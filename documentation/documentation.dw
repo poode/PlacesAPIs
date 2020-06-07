@@ -388,8 +388,8 @@
  *                  description: poll text to be voted later by users
  *                  required: true
  *                  type: string
- *               albumId:
- *                  description: album ID we can get from user's albums added by him/her, user must own this album.
+ *               pollId:
+ *                  description: poll ID.
  *                  required: true
  *                  type: number
  *     responses:
