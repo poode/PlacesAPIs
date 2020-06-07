@@ -55,12 +55,13 @@ async function getPollListByAlbumId({ albumId }) {
 exports.getPollListByAlbumId = getPollListByAlbumId;
 
 exports.createPoll = async ({ user, body }) => {
-  const { album, err, status } = await getAlbumById(body.albumId);
-  if(err) return { err, status };
-  if(album.userId == user.id || user.role == 'admin'){
+  // const { album, err, status } = await getAlbumById(body.albumId);
+  // if(err) return { err, status };
+  // if(album.userId == user.id || user.role == 'admin'){
   const createdPoll = await db.poll.create(body);
   return { createdPoll };
-  } else return { err: `You do not own a album with id ${body.albumId}`, status: 401 };
+  // } 
+  // else return { err: `You do not own an album with id ${body.albumId}`, status: 401 };
 }
 
 exports.updatePoll = async ({ user, body }) => {
