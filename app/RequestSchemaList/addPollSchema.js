@@ -7,8 +7,8 @@ exports.addPollSchema = {
   "properties": {
     "text": {
       "type": "string",
-      "minLength": 25,
-      "maxLength": 25,
+      "minLength": 5,
+      "maxLength": 255,
       "errorMessage": "please send me text of the poll item!"
     },
     "albumId": {
