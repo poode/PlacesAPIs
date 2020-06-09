@@ -16,6 +16,14 @@ async function getByName(name) {
 }
 exports.getByName = getByName;
 
+exports.getBySearch = async ({ query }) => {
+  const city = await db.city.findAll({ where: { name: {
+    [db.Sequelize.Op.like]: `%${query.name}%`
+  } } });
+  if(!city.length) return { err: `There is no city with name ${query.name}`, status: 404 }
+  return { city }
+}
+
 exports.createCity = async reqBody => {
   const { err, city, status } = await getByName(reqBody.name);
   if (city) {

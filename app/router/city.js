@@ -7,11 +7,12 @@ const { adminRole } = require('../middelwares/adminRole');
 const { addCitySchema } = require('../RequestSchemaList/addCitySchema');
 const { getCityByNameSchema } = require('../RequestSchemaList/getCityByNameSchema');
 
-const { self, addCity,getCityByName,getCityById,updateCity,deleteCity, listOfCities } = require('../controllers/City');
+const { self, addCity,getCityByName,getCityById,updateCity,deleteCity, listOfCities, searchCityByName } = require('../controllers/City');
 
 
 router.post('/', jwt(), validate(addCitySchema), addCity.bind(self));
 router.get('/', validate(getCityByNameSchema), getCityByName.bind(self));
+router.get('/search', validate(getCityByNameSchema), searchCityByName.bind(self));
 router.get('/all/list',listOfCities.bind(self));
 router.get('/:id', getCityById.bind(self));
 router.put('/:id', jwt(),updateCity.bind(self));

@@ -30,11 +30,36 @@
 
  /**
  * @swagger
- * /cities:
+ * /cities/:
  *   get:
  *     tags:
  *       - Cities APIs
  *     description: Any user can get city info using city name.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: name
+ *         in: query
+ *         schema:
+ *            type: object
+ *            properties:
+ *               name:
+ *                  description: City name
+ *                  required: true
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: Returns  City info
+ */
+
+ /**
+ * @swagger
+ * /cities/search:
+ *   get:
+ *     tags:
+ *       - Cities APIs
+ *     description: Any user can get city info using city name.
+ *     summary: Any user can get city info using city name.
  *     produces:
  *       - application/json
  *     parameters:
