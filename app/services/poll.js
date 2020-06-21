@@ -55,9 +55,10 @@ async function getPollListByAlbumId({ albumId }) {
 exports.getPollListByAlbumId = getPollListByAlbumId;
 
 exports.createPoll = async ({ user, body }) => {
-  // const { album, err, status } = await getAlbumById(body.albumId);
-  // if(err) return { err, status };
+  const { album, err, status } = await getAlbumById(body.albumId);
+  if(err) return { err, status };
   // if(album.userId == user.id || user.role == 'admin'){
+  body.userId = user.id;
   const createdPoll = await db.poll.create(body);
   return { createdPoll };
   // } 
@@ -71,6 +72,7 @@ exports.updatePoll = async ({ user, body }) => {
   // const album = await getAlbumById(poll.albumId);
   // if(album.err) return ({ err: album.err, status: album.status });
   // if(album.album.userId == user.id || user.role == 'admin'){
+    if(poll.userId !== user.id) return {err: 'This poll is not yours!', status: 422 };
     await db.poll.update({ text: body.text }, { where: { id }});
     return {  response: 'Poll updated!' };
   // } else {
@@ -82,12 +84,13 @@ exports.deletePoll = async ({ user, query }) => {
   const id = query.id;
   const { poll, err, status } = await getPollById(id);
   if(err) return { err, status };
-  const album = await getAlbumById(poll.albumId);
-  if(album.err) return ({ err: album.err, status: album.status });
-  if(album.album.userId == user.id || user.role == 'admin'){
+  // const album = await getAlbumById(poll.albumId);
+  // if(album.err) return ({ err: album.err, status: album.status });
+  // if(album.album.userId == user.id || user.role == 'admin'){
+    if(poll.userId !== user.id) return {err: 'This poll is not yours!', status: 422 };
     await db.poll.destroy({ where: { id }});
     return { response: 'Poll deleted!' };
-  } else {
-    return { err: `You do not own this poll`, status: 401 };
-  }
+  // } else {
+  //   return { err: `You do not own this poll`, status: 401 };
+  // }
 } 

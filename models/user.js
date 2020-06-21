@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     // User.hasMany(models.Album);
     // User.hasMany(models.Vote);
     User.hasMany(models.report);
+    User.hasMany(models.poll);
   };
   return User;
 };
